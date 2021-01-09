@@ -1,4 +1,4 @@
-#N canvas 424 475 475 359 10;
+#N canvas 152 246 475 359 10;
 #X obj 105 65 env~;
 #X obj 105 175 / 10000;
 #X obj 105 195 swap 1;
@@ -16,6 +16,10 @@
 #X obj 105 136 *;
 #X obj 105 88 max;
 #X text 163 89 was:;
+#X obj 227 242 switch~;
+#X obj 227 198 r ativar_processamento_em_adc;
+#X obj 242 220 else/initmess 0;
+#X floatatom 185 220 5 0 0 0 - - -;
 #X connect 0 0 15 0;
 #X connect 1 0 2 0;
 #X connect 2 0 3 0;
@@ -31,3 +35,7 @@
 #X connect 13 1 14 1;
 #X connect 14 0 1 0;
 #X connect 15 0 13 0;
+#X connect 18 0 17 0;
+#X connect 18 0 20 0;
+#X connect 19 0 17 0;
+#X connect 19 0 20 0;

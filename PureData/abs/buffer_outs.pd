@@ -1,8 +1,0 @@
-#N canvas 549 161 333 216 12;
-#X obj 23 23 inlet;
-#X obj 23 133 outlet;
-#X obj 23 47 list prepend buffer pad \$1 return;
-#X obj 23 71 list trim;
-#X connect 0 0 2 0;
-#X connect 2 0 3 0;
-#X connect 3 0 1 0;

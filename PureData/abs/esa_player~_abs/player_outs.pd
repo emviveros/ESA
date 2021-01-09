@@ -5,7 +5,7 @@
 #X obj 23 65 route bang;
 #X text 72 218 bang de fim;
 #X msg 23 89 endbang;
-#X obj 23 137 list prepend \$1;
+#X obj 23 137 list prepend \$1 out;
 #X connect 0 0 3 0;
 #X connect 2 0 1 0;
 #X connect 3 0 5 0;

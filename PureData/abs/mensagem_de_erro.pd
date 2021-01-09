@@ -1,0 +1,17 @@
+#N canvas 238 216 450 364 10;
+#X declare -lib ofelia;
+#X obj 58 31 inlet;
+#X obj 60 265 ofelia f \; local log = ofLog() \; log:post("Black message")
+\; log:error("Red message") \;;
+#X obj 60 245 bng 15 250 50 0 empty empty empty 17 7 0 10 -262144 -1
+-1;
+#X obj 58 72 list;
+#X obj 301 25 declare -lib ofelia;
+#X text 137 57 Imprime mensagem de erro no console do Pd;
+#X obj 57 99 ofelia d -c10 \$0-error_message \; local log = ofLog()
+\; \; function M.list(fv) \; local msg = '' \; for i=1 \, #fv do \;
+msg = msg .. ' ' .. fv[i] \; end \; log:error(tostring(msg)) \; end
+\;;
+#X connect 0 0 3 0;
+#X connect 2 0 1 0;
+#X connect 3 0 6 0;

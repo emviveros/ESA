@@ -1,0 +1,521 @@
+#N canvas 222 331 294 125 12;
+#X obj 10 10 button 86 22 255 255 255 128 128 159;
+#X obj 10 37 sel 1;
+#X obj 11 11 cnv 15 84 20 empty empty DIAGRAMAS 13 10 0 10 -66577 -228856
+0;
+#X msg 10 61 \; pd-projeto_ESA vis 1;
+#N canvas 188 159 865 471 projeto_ESA 1;
+#X text 425 52 E1 - entrada de mensagens midi;
+#X text 425 72 E2 - Armazenamento das mensagens;
+#X text 425 92 E3 - Processamento das mensagens;
+#X text 425 112 E4 - Processamento de Áudio (Mixagem);
+#X text 425 132 T - Geradora de sinal temporal;
+#X text 425 152 en - entrada de mensagens MIDI;
+#X text 425 172 e1 - vetor de evento a executar;
+#X text 425 192 e2 - vetor de dados de evento a executar;
+#X text 425 212 e3 - processador DSP;
+#X text 445 232 Vermelho: mensagens de estado dos processadores DSP
+;
+#X text 445 252 Preto: sinal DSP de áudio;
+#X text 425 272 t - ponteiro de informações de tempo instantâneo
+;
+#X text 425 292 Sn - Saída de áudio;
+#N canvas 643 216 450 300 ESA_E2 0;
+#X obj 100 100 bng 60 250 50 0 empty empty E2 25 25 0 10 -262144 -1
+-1;
+#N canvas 228 246 865 300 ESA-estadoE2 0;
+#X obj 27 49 else/pic 1 ../data/E2-Armazenamento_de_mensagens.gif empty
+empty 0 0;
+#X text 365 53 A1 - Processador de requisições;
+#X text 365 73 A2 - Tabelas de dados de eventos automatizados;
+#X text 365 93 e1- vetor de evento a executar;
+#X text 365 113 e2 - mensagens com os dados requisitados;
+#X text 365 133 e3 - mensagens do processador DSP (estado de processadores
+DSP), f 63;
+#X text 365 153 ea1 - mensagens internas de requisição de dados das
+tabelas;
+#X text 365 173 ea2 - mensagens internas dos dados requisitados às
+tabelas;
+#X obj 264 8 else/note 425 18 Menlo empty 0 0 0 0 0 255 255 255 0 0
+E2 - Armazenamento de mensagens;
+#X restore 173 100 pd ESA-estadoE2;
+#X msg 100 176 \; pd-ESA-estadoE2 vis 1;
+#X connect 0 0 2 0;
+#X coords 0 -1 1 1 60 60 2 100 100;
+#X restore 105 154 pd ESA_E2;
+#N canvas 643 216 450 300 ESA_E3 0;
+#X obj 100 100 bng 60 250 50 0 empty empty E3 25 25 0 10 -262144 -1
+-1;
+#N canvas 269 93 800 483 ESA-estadoE3 0;
+#X obj 21 47 else/pic 1 ../data/E3-Processador_DSP.gif empty empty
+0 0;
+#X obj 295 10 else/note 425 18 Menlo empty 0 0 0 0 0 255 255 255 0
+0 E3 - Processador DSP;
+#X text 365 53 D1 - Gerenciador de Estados dos Processadores de Som
+;
+#X text 375 73 Processador de mensagens de E/S;
+#X text 375 93 Sequencer;
+#X text 365 123 D2 - Processadores de Som;
+#X text 375 143 Sampler;
+#X text 375 163 Synth;
+#X text 375 183 LooperStation;
+#X text 375 203 Metrônomo;
+#X text 365 243 e1 - vetor de evento a executar;
+#X text 365 263 e2 - vetor de dados de evento a executar;
+#X text 365 283 e3 - vetor de dados de estado dos processadores;
+#X text 365 303 t - ponteiro de informações de tempo instantâneo
+;
+#X text 365 323 en - mensagens de controle aos processadores de som
+;
+#N canvas 356 74 854 567 tempo_Mensagens 0;
+#X text 14 8 Global tempo management;
+#X text 130 33 Have a BPM control with beat measure panel;
+#X text 130 55 It consist in a panel with on/off metronome sound \,
+bpm tempo control and measure control with visual beat indicator;
+#X text 22 148 Messages;
+#X msg 200 267 resolution \$1;
+#X msg 331 267 reset \$1 \$2;
+#X obj 331 246 pack f f;
+#X obj 37 247 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
+1;
+#X floatatom 431 248 5 0 0 1 bpm - -;
+#X floatatom 376 227 5 0 0 2 quantum - -;
+#X floatatom 331 227 5 0 0 2 beat - -;
+#X floatatom 200 247 5 0 0 1 subdivisions - -;
+#X msg 37 268 connect \$1;
+#X obj 130 247 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
+1;
+#X msg 130 267 play \$1;
+#X floatatom 511 248 5 0 0 1 ms - -;
+#X msg 511 267 offset \$1;
+#X text 130 95 Provides possibility of sincronize events by tempo steps
+or by phase. As well Ableton Link sincronization support;
+#N canvas 76 31 670 729 Control_Messages 0;
+#X msg 14 12 tempo in <<control_message>>;
+#X text 74 97 resolution <float> -;
+#X text 46 129 reset <beat> <quantum> -;
+#X text 102 323 offset <float> -;
+#X text 109 45 connect <1-0> -;
+#X text 130 71 play <1-0> -;
+#X text 221 45 start/stop Ableton Link Connection via Network;
+#X text 221 71 start/stop play message (don't know for what!);
+#X text 221 296 tempo in <float> bpm;
+#X text 221 323 offset in <float> ms;
+#X text 221 341 Used to calibrate time latency of pd audio signal sent
+to sound on the speakers;
+#X msg 14 422 tempo out <<state_message>>;
+#X text 116 460 step <float> -;
+#X text 221 460 atual step of the subdivision of global BPM time;
+#X text 109 488 phase <float> -;
+#X text 81 584 beat_time <float> -;
+#X text 123 636 bmp <float> -;
+#X text 221 636 global time in BPM (beats per minute);
+#X text 74 663 is_playing <float> -;
+#X text 221 663 is_playing status (don't know for what);
+#X text 11 688 #abl_link_num_peers <float> -;
+#X text 221 688 number of devices connected in Ableton Link sync chain
+;
+#X text 102 379 volume <float> -;
+#X text 221 379 volume of metronome sound;
+#X text 123 296 bpm <float> -;
+#X text 221 192 set reference note value of time signature;
+#X text 241 212 1: whole note;
+#X text 241 229 2: half note;
+#X text 241 247 4: quarter note;
+#X text 234 265 16: sixtieth note;
+#X text 221 488 atual phase of global BPM time. It's magnitude is associated
+to <quantum> value. For <quantum> concept see:;
+#X text 221 584 time elapsed after DSP started first time or after
+received [reset <beat> <quantum>( message. For <quantum> concept see:
+, f 59;
+#N canvas 341 297 623 219 \$0-reset_message 0;
+#X text 16 22 reset <beat> <quantum> -;
+#X text 191 22 reset count of:;
+#X text 301 21 step (first outlet);
+#X text 301 38 phase (second outlet);
+#X text 301 56 beat_time (third outlet);
+#X text 191 111 arguments:;
+#X text 271 112 <beat> float that sets initial beat after reset;
+#X text 271 129 <quantum>;
+#X text 341 129 float that scale in number of beats when will ocurr
+a guaranteed phase alignment with all another ableton link peers conected
+to same session, f 37;
+#X restore 230 129 pd \$0-reset_message;
+#N canvas 570 227 306 150 quantum 0;
+#X obj 35 22 else/click 1;
+#X obj 35 46 \$0;
+#X msg 35 70 \; pd-\$1-reset_message vis 1;
+#X connect 0 0 1 0;
+#X connect 1 0 2 0;
+#X restore 545 504 pd quantum;
+#N canvas 570 227 306 150 quantum 0;
+#X obj 35 22 else/click 1;
+#X obj 35 46 \$0;
+#X msg 35 70 \; pd-\$1-reset_message vis 1;
+#X connect 0 0 1 0;
+#X connect 1 0 2 0;
+#X restore 255 614 pd quantum;
+#X text 60 162 beats_per_bar <0-99> -;
+#X text 53 192 note_value <1-2-4-16> -;
+#X text 221 162 set numerator of time signature;
+#N canvas 296 175 613 178 \$0-resolution_messages 0;
+#X text 14 27 resolution <float> -;
+#X text 181 88 resolution = 2 you will have 8 steps (0-7) \,;
+#X text 181 104 resolution = 3 you will have triplets 12 steps (0-11)
+\,;
+#X text 181 120 resolution = 4 you will 16 steps (0-15) \, and so on.
+;
+#X text 181 73 an example \, if you want to divide 4/4 quarter notes
+by;
+#X text 161 27 set subdivision of beat timeline on first outlet. Time
+resultant between beat steps is bpm time divides by <float>, f 49
+;
+#X restore 224 97 pd \$0-resolution_messages;
+#X text 60 524 beats_per_bar <0-99> -;
+#X text 53 549 note_value <1-2-4-16> -;
+#X text 221 524 receive numerator of time signature when it changing
+;
+#X text 221 549 receive reference note value of time signature when
+it changing;
+#X restore 686 24 pd Control_Messages;
+#X floatatom 33 458 5 0 0 1 peers_connected - -;
+#X floatatom 34 508 5 0 0 0 - - -;
+#X floatatom 295 516 9 0 0 1 phase - -;
+#X floatatom 458 459 9 0 0 1 beat_time - -;
+#X floatatom 459 515 5 0 0 1 tempo_(bpm) - -;
+#X text 24 544 .;
+#X msg 14 192 tempo in <<control_message>>;
+#X msg 14 387 tempo out <<state_message>>;
+#X msg 734 268 note_value \$1;
+#X floatatom 734 248 5 0 0 1 denominator - -;
+#X floatatom 629 515 5 0 0 1 note_value(1-2-4-8-16) - -;
+#X obj 287 476 bng 8 250 50 0 empty empty empty 17 7 0 10 -262144 -1
+-1;
+#X floatatom 602 245 5 1 99 1 numerator - -;
+#X msg 602 268 beats_per_bar \$1;
+#X text 662 218 TIME SIGNATURE;
+#X msg 431 267 bpm \$1;
+#X obj 37 324 s.mess tempo in;
+#X obj 33 434 r.mess tempo out #abl_link_num_peers;
+#X obj 297 434 r.mess tempo out step;
+#X obj 458 435 r.mess tempo out beat_time;
+#X obj 34 484 r.mess tempo out is_playing;
+#X obj 295 492 r.mess tempo out phase;
+#X obj 459 491 r.mess tempo out bpm;
+#X obj 629 491 r.mess tempo out note_value;
+#X obj 655 109 else/canvas.active;
+#X floatatom 655 133 5 0 0 0 - - -;
+#X obj 655 156 switch~;
+#X floatatom 297 458 5 0 0 0 - - -;
+#X connect 4 0 35 0;
+#X connect 5 0 35 0;
+#X connect 6 0 5 0;
+#X connect 7 0 12 0;
+#X connect 8 0 34 0;
+#X connect 9 0 6 1;
+#X connect 10 0 6 0;
+#X connect 11 0 4 0;
+#X connect 12 0 35 0;
+#X connect 13 0 14 0;
+#X connect 14 0 35 0;
+#X connect 15 0 16 0;
+#X connect 16 0 35 0;
+#X connect 27 0 35 0;
+#X connect 28 0 27 0;
+#X connect 31 0 32 0;
+#X connect 32 0 35 0;
+#X connect 34 0 35 0;
+#X connect 36 0 19 0;
+#X connect 37 0 46 0;
+#X connect 38 0 22 0;
+#X connect 39 0 20 0;
+#X connect 40 0 21 0;
+#X connect 41 0 23 0;
+#X connect 42 0 29 0;
+#X connect 43 0 44 0;
+#X connect 44 0 45 0;
+#X connect 46 0 30 0;
+#X restore 600 433 pd tempo_Mensagens;
+#X restore 173 100 pd ESA-estadoE3;
+#X msg 100 176 \; pd-ESA-estadoE3 vis 1;
+#X connect 0 0 2 0;
+#X coords 0 -1 1 1 60 60 2 100 100;
+#X restore 209 166 pd ESA_E3;
+#N canvas 643 216 450 300 ESA_E4 0;
+#X obj 100 100 bng 60 250 50 0 empty empty E4 25 25 0 10 -262144 -1
+-1;
+#N canvas 183 213 902 386 ESA-estadoE4 1;
+#X obj 24 55 else/pic 1 ../data/E4-Processamento_de_Audio.gif empty
+empty 0 0;
+#X obj 252 9 else/note 425 18 Menlo empty 0 0 0 0 0 255 255 255 0 0
+E4 - Processamento de Áudio (Mixagem);
+#X text 350 78 J - Processamento de mensagens de entrada;
+#X text 350 98 J1 - Mixer;
+#X text 350 118 J2 - Efeitos de Masterização;
+#X text 350 138 e3 - mensagens do processador DSP;
+#X text 360 158 Vermelho: estado de processadores DSP;
+#X text 360 178 Preto: sinal DSP;
+#X text 350 198 en1 - mensagens de controle dos parâmetros dos efeitos
+de masterização, f 70;
+#X text 350 218 en2 - mensagens de controle do mixer;
+#X text 350 238 es1 - sinal dsp dos canais pré processamento;
+#X text 350 258 es2 - sinal dsp dos canais pós processamento;
+#X restore 173 100 pd ESA-estadoE4;
+#X msg 100 176 \; pd-ESA-estadoE4 vis 1;
+#X connect 0 0 2 0;
+#X coords 0 -1 1 1 60 60 2 100 100;
+#X restore 239 254 pd ESA_E4;
+#N canvas 643 216 450 300 ESA_T 0;
+#X obj 100 100 bng 60 250 50 0 empty empty T 25 25 0 10 -262144 -1
+-1;
+#N canvas 146 122 947 358 ESA-estadoT 0;
+#X obj 29 79 else/pic 1 ../data/T-Geradora_de_sinal_temporal.gif empty
+empty 0 0;
+#X obj 264 8 else/note 425 18 Menlo empty 0 0 0 0 0 255 255 255 0 0
+T - Geradora de sinal temporal;
+#X text 365 53 T1 - Processador de mensagens de entrada;
+#X text 375 73 Liga-Desliga;
+#X text 365 103 T2 - Gerador de vetor de Timestamp para servir de ponteiro
+além de outras possíveis características necessárias para sincronização
+com instrumentos externos., f 73;
+#X text 375 153 Definir dados:;
+#X text 405 173 Phase;
+#X text 405 193 Step;
+#X text 405 213 Resolution;
+#X text 365 253 e1 - mensagem de ativação/desativação do controlador
+temporal, f 61;
+#X text 365 273 t - mensagem/ponteiro de timestamp instantâneo;
+#N canvas 362 28 958 642 doc_Mensagens_de_entrada 0;
+#X text 22 148 Messages;
+#X msg 200 267 resolution \$1;
+#X msg 331 267 reset \$1 \$2;
+#X obj 331 246 pack f f;
+#X obj 37 247 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
+1;
+#X floatatom 431 248 5 0 0 1 bpm - -;
+#X floatatom 376 227 5 0 0 2 quantum - -;
+#X floatatom 331 227 5 0 0 2 beat - -;
+#X floatatom 200 247 5 0 0 1 subdivisions - -;
+#X msg 37 268 connect \$1;
+#X obj 130 247 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
+1;
+#X msg 130 267 play \$1;
+#X floatatom 511 248 5 0 0 1 ms - -;
+#X msg 511 267 offset \$1;
+#X floatatom 563 468 5 0 0 1 peers_connected - -;
+#X floatatom 33 568 5 0 0 0 - - -;
+#X floatatom 418 483 9 0 0 1 phase - -;
+#X floatatom 199 488 9 0 0 1 beat_time - -;
+#X floatatom 749 477 5 0 0 1 tempo_(bpm) - -;
+#X text 23 614 .;
+#X msg 14 387 tempo out <<state_message>>;
+#X msg 734 268 note_value \$1;
+#X floatatom 734 248 5 0 0 1 denominator - -;
+#X floatatom 266 567 5 0 0 1 note_value(1-2-4-8-16) - -;
+#X obj 35 506 bng 8 250 50 0 empty empty empty 17 7 0 10 -262144 -1
+-1;
+#X floatatom 602 245 5 1 99 1 numerator - -;
+#X msg 602 268 beats_per_bar \$1;
+#X msg 431 267 bpm \$1;
+#X obj 33 544 r.mess tempo out is_playing;
+#X obj 266 543 r.mess tempo out note_value;
+#X floatatom 36 488 5 0 0 0 - - -;
+#X text 50 45 Serve para sincronizar eventos temporais através de
+parâmetros como phase (fase) e/ou steps (beat no compasso)., f 73
+;
+#X text 50 85 A máquina de tempo Global \, tem suporte a Ableton Link
+\, permitindo sincronizar batidas entre instrumentos ligados a uma
+mesma rede Wi-Fi, f 73;
+#N canvas 493 0 670 729 Mensagens_de_controle_da_máquina_de_tempo_global
+0;
+#X text 74 97 resolution <float> -;
+#X text 46 129 reset <beat> <quantum> -;
+#X text 102 323 offset <float> -;
+#X text 109 45 connect <1-0> -;
+#X text 130 71 play <1-0> -;
+#X text 221 296 tempo in <float> bpm;
+#X text 221 323 offset in <float> ms;
+#X text 116 460 step <float> -;
+#X text 109 488 phase <float> -;
+#X text 81 584 beat_time <float> -;
+#X text 123 636 bmp <float> -;
+#X text 221 636 global time in BPM (beats per minute);
+#X text 74 663 is_playing <float> -;
+#X text 221 663 is_playing status (don't know for what);
+#X text 11 688 #abl_link_num_peers <float> -;
+#X text 221 688 number of devices connected in Ableton Link sync chain
+;
+#X text 102 389 volume <float> -;
+#X text 123 296 bpm <float> -;
+#X text 221 488 atual phase of global BPM time. It's magnitude is associated
+to <quantum> value. For <quantum> concept see:;
+#X text 221 584 time elapsed after DSP started first time or after
+received [reset <beat> <quantum>( message. For <quantum> concept see:
+, f 59;
+#N canvas 341 297 623 219 \$0-reset_message 0;
+#X text 16 22 reset <beat> <quantum> -;
+#X text 191 22 reset count of:;
+#X text 301 21 step (first outlet);
+#X text 301 38 phase (second outlet);
+#X text 301 56 beat_time (third outlet);
+#X text 191 111 arguments:;
+#X text 271 112 <beat> float that sets initial beat after reset;
+#X text 271 129 <quantum>;
+#X text 341 129 float that scale in number of beats when will ocurr
+a guaranteed phase alignment with all another ableton link peers conected
+to same session, f 37;
+#X restore 230 129 pd \$0-reset_message;
+#N canvas 570 227 306 150 quantum 0;
+#X obj 35 22 else/click 1;
+#X obj 35 46 \$0;
+#X msg 35 70 \; pd-\$1-reset_message vis 1;
+#X connect 0 0 1 0;
+#X connect 1 0 2 0;
+#X restore 545 504 pd quantum;
+#N canvas 570 227 306 150 quantum 0;
+#X obj 35 22 else/click 1;
+#X obj 35 46 \$0;
+#X msg 35 70 \; pd-\$1-reset_message vis 1;
+#X connect 0 0 1 0;
+#X connect 1 0 2 0;
+#X restore 255 614 pd quantum;
+#X text 60 162 beats_per_bar <0-99> -;
+#X text 53 192 note_value <1-2-4-16> -;
+#X text 60 524 beats_per_bar <0-99> -;
+#X text 53 549 note_value <1-2-4-16> -;
+#X text 221 524 receive numerator of time signature when it changing
+;
+#X text 221 549 receive reference note value of time signature when
+it changing;
+#X text 221 45 inicia/interrompe conexão do Ableton Link;
+#X text 221 71 incia/interrompe mensagem de está tocando (ñ sei p/
+q serve);
+#N canvas 264 -685 613 138 mensagem_de_resolução 0;
+#X text 18 19 resolution <float> -;
+#X text 165 19 seta a subdivisão do compasso no primeiro outlet.;
+#X text 185 38 Por exemplo \, se queremos dividir um compasso 4/4 pela
+;
+#X text 185 53 resolução = 2 teremos 8 subdivisões (0-7) \,;
+#X text 185 69 resolução = 3 teremos 12 subdivisões \, em tercinas
+\, (0-11) \,;
+#X text 185 85 resolução = 4 teremos 16 subdivisões \, e etc...
+;
+#X restore 224 97 pd mensagem_de_resolução;
+#X text 221 162 seta o numerador da fórmula de compasso.;
+#X text 221 192 seta a figura de tempo que servirá de unidade de tempo
+;
+#X text 241 212 1: breve;
+#X text 241 229 2: semi breve;
+#X text 241 247 4: colcheia;
+#X text 234 265 16: semi colcheia;
+#X text 221 341 Serve para calibrar o atraso de tempo (latência) entre
+o envio do sinal à interface de som até o som ser gerado na caixa
+de som, f 59;
+#X text 221 389 referente ao volume do toque do metrônomo;
+#X msg 14 12 tempo in <<mensagem_de_controle>>;
+#X msg 14 422 tempo out <<mensagem_de_estado>>;
+#X text 221 460 número da subdivisão atual do tempo do compasso;
+#X restore 583 12 pd Mensagens_de_controle_da_máquina_de_tempo_global
+;
+#X obj 18 9 else/note 425 18 Menlo empty 0 0 0 0 0 255 255 255 0 0
+Máquina de tempo Global;
+#X text 632 218 FÓRMULA DE COMPASSO;
+#X msg 14 192 T entrada <<control_message>>;
+#X obj 37 324 s.mess T entrada;
+#X obj 563 444 v peers;
+#X obj 563 424 bng 15 250 50 0 empty empty empty 17 7 0 10 -262144
+-1 -1;
+#X obj 872 247 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
+1;
+#X msg 872 267 on-off \$1;
+#X obj 49 463 r T_saida_step;
+#X obj 210 464 r T_saida_tempo_decorrido;
+#X obj 418 459 r T_saida_phase;
+#X obj 408 438 v phase;
+#X obj 408 420 bng 15 250 50 0 empty empty empty 17 7 0 10 -262144
+-1 -1;
+#X obj 749 453 r T_saida_bpm;
+#X obj 735 414 bng 15 250 50 0 empty empty empty 17 7 0 10 -262144
+-1 -1;
+#X obj 735 432 v bpm;
+#X text 285 521 localizado no gui;
+#X obj 36 442 v step;
+#X obj 36 422 bng 15 250 50 0 empty empty empty 17 7 0 10 -262144 -1
+-1;
+#X obj 199 422 bng 15 250 50 0 empty empty empty 17 7 0 10 -262144
+-1 -1;
+#X obj 199 442 v tempo_decorrido;
+#X connect 1 0 37 0;
+#X connect 2 0 37 0;
+#X connect 3 0 2 0;
+#X connect 4 0 9 0;
+#X connect 5 0 27 0;
+#X connect 6 0 3 1;
+#X connect 7 0 3 0;
+#X connect 8 0 1 0;
+#X connect 9 0 37 0;
+#X connect 10 0 11 0;
+#X connect 11 0 37 0;
+#X connect 12 0 13 0;
+#X connect 13 0 37 0;
+#X connect 21 0 37 0;
+#X connect 22 0 21 0;
+#X connect 25 0 26 0;
+#X connect 26 0 37 0;
+#X connect 27 0 37 0;
+#X connect 28 0 15 0;
+#X connect 29 0 23 0;
+#X connect 30 0 24 0;
+#X connect 38 0 14 0;
+#X connect 39 0 38 0;
+#X connect 40 0 41 0;
+#X connect 41 0 37 0;
+#X connect 45 0 16 0;
+#X connect 46 0 45 0;
+#X connect 47 0 18 0;
+#X connect 48 0 49 0;
+#X connect 49 0 18 0;
+#X connect 51 0 30 0;
+#X connect 52 0 51 0;
+#X connect 53 0 54 0;
+#X connect 54 0 17 0;
+#X restore 659 54 pd doc_Mensagens_de_entrada;
+#X restore 173 100 pd ESA-estadoT;
+#X msg 100 176 \; pd-ESA-estadoT vis 1;
+#X connect 0 0 2 0;
+#X coords 0 -1 1 1 60 60 2 100 100;
+#X restore 131 310 pd ESA_T;
+#N canvas 643 216 450 300 ESA_E1 0;
+#X obj 100 100 bng 60 250 50 0 empty empty E1 25 25 0 10 -262144 -1
+-1;
+#N canvas 122 78 952 461 ESA-estadoE1 0;
+#X obj 21 45 else/pic 1 ../data/E1-Processamento_de_mensagens_de_entrada.gif
+empty empty 0 0;
+#X obj 273 9 else/note 425 16 Menlo empty 0 0 0 0 0 255 255 255 0 0
+E1 - Processamento de mensagens de entrada;
+#X text 381 92 M1 - recepção de mensagens MIDI;
+#X text 391 112 Recebe msgs MIDI;
+#X text 391 132 Traduz para uma mensagem interna com funcionalidade
+legível;
+#X text 381 162 M2 - tradução de mensagens MIDI para ESA-API;
+#X text 391 182 ESA-API contém inteligência para operar os processadores
+corretamente, f 69;
+#X text 381 212 en - entrada de mensagens em MIDI;
+#X text 381 232 m1 - mensagens internas com funcionalidade legível
+;
+#X text 381 252 t - ponteiros com informações de tempo instantâneo
+(timestamp), f 69;
+#X text 381 272 mn - mensagens padronizadas de ESA-API que controlam
+outras máquinas da ESA, f 76;
+#X restore 173 100 pd ESA-estadoE1;
+#X msg 100 176 \; pd-ESA-estadoE1 vis 1;
+#X connect 0 0 2 0;
+#X coords 0 -1 1 1 60 60 2 100 100;
+#X restore 51 224 pd ESA_E1;
+#X obj 275 10 else/note 425 18 Menlo empty 0 0 0 0 0 255 255 255 0
+0 ESA - Diagramas de Estado;
+#X obj 16 43 else/pic 1 ../data/diagrama_ESA.gif empty empty 0 0;
+#X restore 171 75 pd projeto_ESA;
+#X connect 0 0 1 0;
+#X connect 1 0 3 0;
+#X coords 0 -1 1 1 86 22 2 10 10;

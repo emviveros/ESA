@@ -117,11 +117,16 @@
 #N canvas 0 22 450 300 referência 0;
 #X obj 93 10 bng 15 250 50 0 empty empty empty 17 7 0 10 -262144 -1
 -1;
-#X msg 15 40 browse https://forum.pdpatchrepo.info/topic/7710/latency-on-output-and-input/3
+#X msg 15 80 browse https://forum.pdpatchrepo.info/topic/7710/latency-on-output-and-input/3
 ;
-#X obj 15 83 pdcontrol;
-#X connect 0 0 1 0;
+#X obj 15 163 pdcontrol;
+#X msg 54 135 browse http://www.pdpatchrepo.info/patches/patch/92;
+#X obj 93 30 t b b;
+#X connect 0 0 4 0;
 #X connect 1 0 2 0;
+#X connect 3 0 2 0;
+#X connect 4 0 1 0;
+#X connect 4 0 3 0;
 #X coords 0 -1 1 1 98 15 1 10 10;
 #X restore 195 203 pd referência;
 #X connect 0 0 2 0;

@@ -1,10 +1,10 @@
-#N canvas 444 151 319 232 12;
-#X obj 37 37 inlet;
-#X obj 37 130 sig~;
-#X obj 37 154 outlet~;
-#X obj 244 159 outlet;
-#X obj 37 66 route float all, f 30;
-#X obj 140 92 route float;
+#N canvas 444 151 258 211 10;
+#X obj 18 13 inlet;
+#X obj 48 106 sig~;
+#X obj 38 170 outlet~;
+#X obj 191 175 outlet;
+#X obj 48 62 route float all, f 26;
+#X obj 124 90 route float;
 #X connect 0 0 4 0;
 #X connect 1 0 2 0;
 #X connect 4 0 1 0;

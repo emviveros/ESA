@@ -47,7 +47,7 @@
 #X connect 2 0 1 0;
 #X restore 26 258 pd debug_pad_messages;
 #X f 22;
-#N canvas 196 93 773 430 messages_processor 0;
+#N canvas 196 93 773 430 messages_processor 1;
 #X obj 17 20 inlet;
 #N canvas 634 27 529 578 button_colors 0;
 #X obj 64 17 inlet;
@@ -735,15 +735,15 @@ float, f 43;
 #X restore 553 112 pd alias_state;
 #X obj 56 91 route state hold color timer blink alias_state, f 100
 ;
-#X obj 14 377 s_iM pad \$1 color bg;
-#X obj 167 377 s_iM pad \$1 color fg;
+#X obj 167 377 s.mess pad \$1 color fg;
+#X obj 14 377 s.mess pad \$1 color bg;
 #X connect 0 0 4 0;
 #X connect 4 0 15 0;
 #X connect 4 1 27 0;
 #X connect 8 0 6 0;
 #X connect 8 1 19 0;
-#X connect 9 0 28 0;
-#X connect 10 0 29 0;
+#X connect 9 0 29 0;
+#X connect 10 0 28 0;
 #X connect 13 0 12 0;
 #X connect 14 0 7 0;
 #X connect 14 1 13 0;

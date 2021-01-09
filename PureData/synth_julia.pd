@@ -1,16 +1,14 @@
-#N canvas 208 235 536 480 12;
+#N canvas 290 57 792 589 12;
 #X declare -lib else;
 #X declare -path rjlib/pd;
 #X declare -path rjlib/rj;
-#X obj 131 408 out~;
 #N canvas 329 114 450 300 synth_1 0;
 #X obj 65 254 outlet~;
 #X text 64 47 escreva seu synth aqui1;
-#X restore 114 173 pd synth_1;
-#X obj 108 61 keyboard 17 80 1 3 0 0 empty empty;
-#X obj 408 52 declare -lib else;
-#X obj 373 5 declare -path rjlib/pd;
-#X obj 373 28 declare -path rjlib/rj;
+#X restore 114 293 pd synth_1;
+#X obj 662 58 declare -lib else;
+#X obj 627 11 declare -path rjlib/pd;
+#X obj 627 34 declare -path rjlib/rj;
 #X obj 62 442 outlet~;
 #X text 334 225 - melódicos;
 #X text 314 186 TIMBRES;
@@ -23,7 +21,7 @@
 #X connect 0 0 1 0;
 #X coords 0 -1 1 1 45 45 2 10 10;
 #X restore 422 202 pd opções_de_synth;
-#N canvas 591 305 568 321 rjdj_algumas_opções 0;
+#N canvas 33 237 568 321 rjdj_algumas_opções 0;
 #X text 13 7 SYNTHS:;
 #X text 111 40 - grungy and grainy console and cheap synth sounds;
 #X obj 54 40 s_chip;
@@ -42,6 +40,26 @@ and FM stage;
 #X obj 56 244 s_spad;
 #X text 106 274 - type B waveshaper;
 #X obj 56 274 s_wsb;
-#X restore 373 75 pd rjdj_algumas_opções;
-#X connect 1 0 0 0;
-#X connect 1 0 6 0;
+#X restore 627 81 pd rjdj_algumas_opções;
+#X text 277 118 <--- sequencer;
+#X obj 16 34 vradio 15 1 0 8 empty empty empty 0 -8 0 10 -262144 -1
+-1 0;
+#X text 38 32 seletor de timbre;
+#X obj 11 181 vsl 15 128 0 127 0 0 empty empty empty 0 -9 0 10 -262144
+-1 -1 0 1;
+#X text 30 181 processamento;
+#X text 365 316 - Kick;
+#X text 365 335 - Snare;
+#X text 365 354 - close Hit Hat;
+#X text 365 374 - open Hit Hat;
+#X text 365 394 - mallets (percussão?);
+#X text 365 438 - mudar com knob o timbre de um instrumento polimorfo
+;
+#X text 385 460 - tipo no mesmo instrumento sai de kick passando por
+snare indo até quem sabe um hithat, f 28;
+#X obj 241 112 tgl 35 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
+1;
+#X obj 108 61 else/keyboard 17 80 1 3 0 0 empty empty;
+#X obj 131 408 else/out~;
+#X connect 0 0 4 0;
+#X connect 0 0 25 0;

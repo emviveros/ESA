@@ -1,0 +1,8 @@
+#N canvas 561 386 252 159 10;
+#X obj 51 31 inlet;
+#X msg 51 55 endbang;
+#X obj 51 103 outlet;
+#X obj 51 79 list prepend \$1;
+#X connect 0 0 1 0;
+#X connect 1 0 3 0;
+#X connect 3 0 2 0;

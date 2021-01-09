@@ -1,0 +1,21 @@
+#N canvas 296 307 342 219 10;
+#X declare -path ./abs/esa_fx_controle_abs;
+#X obj 80 9 declare -path ./abs/esa_fx_controle_abs;
+#X text 152 136 para ativar efeito é necessário mandar uma mensagem
+dry/wet != 0, f 21;
+#X obj 132 95 LFOs 16;
+#X obj 23 103 tremolos 16;
+#X obj 23 83 vibratos 16;
+#X obj 23 123 cutoffs 16;
+#X obj 23 63 pitch_shifts 16;
+#N canvas 479 373 450 300 meta 0;
+#X obj 41 22 loadbang;
+#X msg 41 93 Janela referente a processador de efeitos;
+#X obj 41 114 print Core_3;
+#X obj 41 64 until;
+#X msg 41 44 24;
+#X connect 0 0 4 0;
+#X connect 1 0 2 0;
+#X connect 3 0 1 0;
+#X connect 4 0 3 0;
+#X restore 64 184 pd meta;
