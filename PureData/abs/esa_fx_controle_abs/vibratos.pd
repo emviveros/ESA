@@ -117,24 +117,25 @@
 #X connect 17 0 3 0;
 #X connect 18 0 21 0;
 #X restore 11 7 pd metapatch;
-#N canvas 503 237 419 468 info 0;
-#X text 23 63 Argumentos:;
-#X msg 30 187 <float-all> <<mensagem_de_controle>>;
-#X text 41 209 Sendo:;
-#X text 93 210 <float-all> -;
-#X text 183 210 (0-k) índice do [recorder];
-#X text 183 227 (all) todos os objetos [recorder];
-#X text 15 257 <<mensagem_de_controle>> -;
+#N canvas 503 237 419 336 info 0;
+#X text 23 93 Argumentos:;
 #X text 22 13 Abstração que cria banco de vibratos para processamento
 de efeitos, f 63;
-#X text 44 87 De acordo com argumento \$1 \, <float> \, cria a quantidade
+#X text 44 117 De acordo com argumento \$1 \, <float> \, cria a quantidade
 de objetos [esaVibrato] que são enderaçados a cada pad, f 54;
-#X text 23 163 Mensagens podem ser enviadas para [s vibrato_in] no
-formato:, f 61;
-#X text 29 361 Entrada/Saída de sinal de áudio:;
-#X text 66 386 entrada: [catch~ vibrato~_in];
-#X text 78 406 saída: [throw~ vibrato~_out];
-#X text 105 63 [esa_vibrato <float>];
+#X text 105 93 [esa_vibrato <float>];
+#N canvas 488 334 450 359 vibrato_info 0;
+#X msg 40 55 <float-all> <<mensagem_de_controle>>;
+#X text 51 77 Sendo:;
+#X text 103 78 <float-all> -;
+#X text 193 78 (0-k) índice do [recorder];
+#X text 193 95 (all) todos os objetos [recorder];
+#X text 25 125 <<mensagem_de_controle>> -;
+#X text 33 31 Mensagens podem ser enviadas para [s vibrato_in] no formato:
+, f 61;
+#X text 39 229 Entrada/Saída de sinal de áudio:;
+#X text 76 254 entrada: [catch~ vibrato~_in];
+#X text 88 274 saída: [throw~ vibrato~_out];
 #N canvas 454 177 450 186 vibrato_messages 0;
 #X text 52 85 <rate> -;
 #X text 112 65 float \, processor id;
@@ -146,7 +147,8 @@ formato:, f 61;
 #X text 112 105 interval in semitons (default 0);
 #X msg 34 21 <pad_n> effect vibrato <rate> <depth> <dry-wet>;
 #X text 46 65 <pad_n> -;
-#X restore 184 257 pd vibrato_messages;
-#X text 23 315 [esa_vibrato] não retorna mensagens;
+#X restore 194 125 pd vibrato_messages;
+#X text 33 183 [esa_vibrato] não retorna mensagens;
+#X restore 161 209 pd vibrato_info;
 #X restore 11 29 pd info;
 #X obj 111 7 namecanvas \$0-vibratos;

@@ -117,26 +117,27 @@
 #X connect 17 0 3 0;
 #X connect 19 0 18 0;
 #X restore 11 7 pd metapatch;
-#N canvas 731 172 457 468 info 0;
-#X text 23 63 Argumentos:;
-#X msg 30 194 <float-all> <<mensagem_de_controle>>;
-#X text 41 216 Sendo:;
-#X text 93 217 <float-all> -;
-#X text 15 264 <<mensagem_de_controle>> -;
-#X text 29 361 Entrada/Saída de sinal de áudio:;
-#X text 44 87 De acordo com argumento \$1 \, <float> \, cria a quantidade
+#N canvas 731 172 457 304 info 0;
+#X text 23 83 Argumentos:;
+#X text 44 107 De acordo com argumento \$1 \, <float> \, cria a quantidade
 de objetos [esa_tremolo_uni] que são enderaçados a cada pad, f 54
 ;
-#X text 105 63 [esa_cutoff_uni <float>];
+#X text 105 83 [esa_cutoff_uni <float>];
 #X text 22 13 Abstração que cria banco de filtros cutoff para processamento
 de efeitos, f 63;
-#X text 23 163 Mensagens podem ser enviadas para [s cutoff_in] no formato:
+#N canvas 533 369 450 300 cutoff_info 0;
+#X msg 38 47 <float-all> <<mensagem_de_controle>>;
+#X text 49 69 Sendo:;
+#X text 101 70 <float-all> -;
+#X text 23 117 <<mensagem_de_controle>> -;
+#X text 37 214 Entrada/Saída de sinal de áudio:;
+#X text 31 16 Mensagens podem ser enviadas para [s cutoff_in] no formato:
 , f 61;
-#X text 183 217 (0-k) índice do [esa_cutoff_uni];
-#X text 183 234 (all) todos os objetos [esa_cutoff_uni];
-#X text 23 315 [esa_cutoff_uni] não retorna mensagens;
-#X text 66 386 entrada: [catch~ cutoff~_in_\$1];
-#X text 78 406 saída: [throw~ cutoff~_out_\$1];
+#X text 191 70 (0-k) índice do [esa_cutoff_uni];
+#X text 191 87 (all) todos os objetos [esa_cutoff_uni];
+#X text 31 168 [esa_cutoff_uni] não retorna mensagens;
+#X text 74 239 entrada: [catch~ cutoff~_in_\$1];
+#X text 86 259 saída: [throw~ cutoff~_out_\$1];
 #N canvas 787 189 347 177 cutoff_messages 0;
 #X text 121 59 float \, processor id;
 #X text 37 119 <dry-wet> -;
@@ -148,6 +149,7 @@ de efeitos, f 63;
 #X text 121 99 tremolo depth (from 0 to 15);
 #X text 49 59 <pad_n> -;
 #X msg 13 15 <pad_n> <frequency> <resonance> <dry-wet>;
-#X restore 178 263 pd cutoff_messages;
+#X restore 186 116 pd cutoff_messages;
+#X restore 190 205 pd cutoff_info;
 #X restore 11 29 pd info;
 #X obj 111 7 namecanvas \$0-cutoffs;

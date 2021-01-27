@@ -98,8 +98,7 @@
 #X msg 309 294 <pad> <<control_message>>;
 #X obj 26 19 r recorder~_entrada;
 #X obj 46 318 s gravador_in;
-#N canvas 530 226 572 296 Mensagens_de_controle_dos_gravadores_em_samplers
-0;
+#N canvas 530 226 572 296 Mensagens_de_controle_dos_gravadores 0;
 #X text 99 177 reset;
 #X text 57 207 loop <float>;
 #X text 139 147 - start point in ms (default 0), f 58;
@@ -125,8 +124,7 @@ f 56;
 #X text 32 44 <pad> - integer 0-15;
 #X text 74 57 - all;
 #X text 31 93 <<control_message>>;
-#X restore 309 313 pd Mensagens_de_controle_dos_gravadores_em_samplers
-;
+#X restore 309 313 pd Mensagens_de_controle_dos_gravadores;
 #X connect 0 0 11 0;
 #X connect 1 0 14 0;
 #X connect 2 0 9 1;
@@ -149,4 +147,4 @@ f 56;
 #X connect 13 0 10 0;
 #X restore 7 52 pd recorder_message_processor;
 #X obj 83 8 declare -path esa_gravadores~_abs;
-#X obj 7 71 gravadores 16;
+#X obj 7 71 gravadores \$1 \$2;

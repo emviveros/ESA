@@ -1,4 +1,4 @@
-#N canvas 165 284 304 115 10;
+#N canvas 165 284 388 115 10;
 #X declare -path esa_looper_abs;
 #N canvas 490 214 645 319 buffer_message_processor 0;
 #X obj 126 86 list trim;
@@ -92,7 +92,7 @@
 #X restore 508 141 pd size;
 #X obj 42 278 s buffer_in;
 #X obj 22 19 r buffers_entrada;
-#N canvas 617 480 572 245 Mensagens_de_controle_dos_buffers 0;
+#N canvas 617 480 572 245 Mensagens_de_controle_dos_buffers 1;
 #X text 43 48 <pad> - integer 0-15;
 #X msg 12 11 <pad> <<control_message>>;
 #X text 42 87 <<control_message>>;
@@ -110,6 +110,22 @@
 #X text 63 196 size <float>;
 #X text 158 197 - sets maximum buffer size in samples, f 53;
 #X text 158 177 - sets maximum buffer size in ms, f 53;
+#N canvas 239 185 291 187 notas 0;
+#X text 24 105 4 minutos em 16 bancos = 339 Mb;
+#X text 108 123 1 minuto = 5 \, 292 Mb;
+#X obj 20 65 bng 15 250 50 0 empty empty empty 17 7 0 10 -262144 -1
+-1;
+#N canvas 684 430 450 174 calculadora_internet 0;
+#X obj 37 37 inlet;
+#X msg 37 58 browse https://www.colincrawley.com/audio-file-size-calculator/
+;
+#X obj 37 90 pdcontrol;
+#X connect 0 0 1 0;
+#X connect 1 0 2 0;
+#X restore 20 82 pd calculadora_internet;
+#X text 24 12 usando 2 minutos = 170Mb;
+#X connect 2 0 3 0;
+#X restore 495 10 pd notas;
 #X restore 327 280 pd Mensagens_de_controle_dos_buffers;
 #X connect 0 0 9 0;
 #X connect 1 0 12 0;
@@ -130,5 +146,5 @@
 #X connect 11 0 2 1;
 #X connect 13 0 3 0;
 #X restore 9 41 pd buffer_message_processor;
-#X obj 120 7 declare -path esa_looper_abs;
-#X obj 9 62 buffers 16 12000;
+#X obj 206 10 declare -path esa_looper_abs;
+#X obj 9 62 buffers \$1 12000 \$2;

@@ -117,13 +117,20 @@
 #X connect 17 0 3 0;
 #X connect 19 0 18 0;
 #X restore 11 7 pd metapatch;
-#N canvas 503 237 457 468 info 0;
-#X text 23 63 Argumentos:;
-#X msg 30 194 <float-all> <<mensagem_de_controle>>;
-#X text 41 216 Sendo:;
-#X text 93 217 <float-all> -;
-#X text 15 264 <<mensagem_de_controle>> -;
-#X text 29 361 Entrada/Saída de sinal de áudio:;
+#N canvas 503 237 457 279 info 0;
+#X text 23 83 Argumentos:;
+#X text 105 83 [esa_pitch_shift_uni <float>];
+#X text 22 21 Abstração que cria banco de pitch-shift para processamento
+de efeitos, f 63;
+#X text 44 107 De acordo com argumento \$1 \, <float> \, cria a quantidade
+de objetos [esa_pitch_shift_uni] que são enderaçados a cada pad,
+f 54;
+#N canvas 515 306 485 367 pitch-shift_info 0;
+#X msg 30 54 <float-all> <<mensagem_de_controle>>;
+#X text 41 76 Sendo:;
+#X text 93 77 <float-all> -;
+#X text 15 124 <<mensagem_de_controle>> -;
+#X text 29 221 Entrada/Saída de sinal de áudio:;
 #N canvas 469 192 439 195 pitch-shift_messages 0;
 #X text 146 84 float \, processor id;
 #X text 64 124 <dry-wet> -;
@@ -135,19 +142,14 @@
 #X msg 31 21 <pad_n> <transposition> <dry-wet>;
 #X msg 31 45 <pad_n> size <grain-size>;
 #X text 76 84 <pad_n> -;
-#X restore 178 265 pd pitch-shift_messages;
-#X text 183 217 (0-k) índice do [esa_pitch_shift_uni];
-#X text 183 234 (all) todos os objetos [esa_pitch_shift_uni];
-#X text 105 63 [esa_pitch_shift_uni <float>];
-#X text 23 315 [esa_pitch_shift_uni] não retorna mensagens;
-#X text 78 406 saída: [throw~ pitch.shift~_out_\$1];
-#X text 66 386 entrada: [catch~ pitch.shift~_in_\$1];
-#X text 22 13 Abstração que cria banco de pitch-shift para processamento
-de efeitos, f 63;
-#X text 44 87 De acordo com argumento \$1 \, <float> \, cria a quantidade
-de objetos [esa_pitch_shift_uni] que são enderaçados a cada pad,
-f 54;
-#X text 23 163 Mensagens podem ser enviadas para [s pitch_shift_in]
+#X restore 178 125 pd pitch-shift_messages;
+#X text 183 77 (0-k) índice do [esa_pitch_shift_uni];
+#X text 183 94 (all) todos os objetos [esa_pitch_shift_uni];
+#X text 23 175 [esa_pitch_shift_uni] não retorna mensagens;
+#X text 78 266 saída: [throw~ pitch.shift~_out_\$1];
+#X text 66 246 entrada: [catch~ pitch.shift~_in_\$1];
+#X text 23 23 Mensagens podem ser enviadas para [s pitch_shift_in]
 no formato:, f 61;
+#X restore 156 195 pd pitch-shift_info;
 #X restore 11 29 pd info;
 #X obj 111 7 namecanvas \$0-pitch_shifts;

@@ -1,0 +1,25 @@
+#N canvas 57 297 450 443 10;
+#X declare -path ./esa_fx_controle_abs;
+#X text 298 88 para ativar efeito é necessário mandar uma mensagem
+dry/wet != 0, f 21;
+#X obj 229 10 declare -path ./esa_fx_controle_abs;
+#X obj 116 98 pitch_shifts \$1;
+#X obj 116 168 vibratos \$1;
+#X obj 116 248 tremolos \$1;
+#X obj 116 318 cutoffs \$1;
+#X obj 340 208 LFOs \$1;
+#X obj 116 82 throw~ pitch_shift~_in_\$1;
+#X obj 86 27 inlet~;
+#X obj 116 114 catch~ pitch_shift~_out_\$1;
+#X obj 116 152 throw~ vibrato~_in_\$1;
+#X obj 116 184 catch~ vibrato~_out_\$1;
+#X obj 116 232 throw~ tremolo~_in_\$1;
+#X obj 116 264 catch~ tremolo~_out_\$1;
+#X obj 106 405 outlet~;
+#X obj 116 302 throw~ cutoff~_in_\$1;
+#X obj 116 334 catch~ cutoff~_out_\$1;
+#X connect 8 0 7 0;
+#X connect 9 0 10 0;
+#X connect 11 0 12 0;
+#X connect 13 0 15 0;
+#X connect 16 0 14 0;

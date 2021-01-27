@@ -117,24 +117,25 @@
 #X connect 17 0 3 0;
 #X connect 19 0 20 0;
 #X restore 11 7 pd metapatch;
-#N canvas 503 237 457 468 info 0;
-#X text 23 63 Argumentos:;
-#X msg 30 194 <float-all> <<mensagem_de_controle>>;
-#X text 41 216 Sendo:;
-#X text 93 217 <float-all> -;
-#X text 15 264 <<mensagem_de_controle>> -;
-#X text 29 361 Entrada/Saída de sinal de áudio:;
+#N canvas 503 237 457 295 info 0;
+#X text 23 83 Argumentos:;
 #X text 22 13 Abstração que cria banco de tremolos para processamento
 de efeitos, f 63;
-#X text 105 63 [esa_tremolo_uni <float>];
-#X text 44 87 De acordo com argumento \$1 \, <float> \, cria a quantidade
+#X text 105 83 [esa_tremolo_uni <float>];
+#X text 44 107 De acordo com argumento \$1 \, <float> \, cria a quantidade
 de objetos [esa_tremolo_uni] que são enderaçados a cada pad, f 54
 ;
-#X text 183 217 (0-k) índice do [esa_tremolo_uni];
-#X text 183 234 (all) todos os objetos [esa_tremolo_uni];
-#X text 23 315 [esa_tremolo_uni] não retorna mensagens;
-#X text 78 406 saída: [throw~ tremolo~_out_\$1];
-#X text 66 386 entrada: [catch~ tremolo~_in_\$1];
+#N canvas 408 237 450 332 tremolo_info 0;
+#X msg 36 53 <float-all> <<mensagem_de_controle>>;
+#X text 47 75 Sendo:;
+#X text 99 76 <float-all> -;
+#X text 21 123 <<mensagem_de_controle>> -;
+#X text 35 220 Entrada/Saída de sinal de áudio:;
+#X text 189 76 (0-k) índice do [esa_tremolo_uni];
+#X text 189 93 (all) todos os objetos [esa_tremolo_uni];
+#X text 29 174 [esa_tremolo_uni] não retorna mensagens;
+#X text 84 265 saída: [throw~ tremolo~_out_\$1];
+#X text 72 245 entrada: [catch~ tremolo~_in_\$1];
 #N canvas 454 177 450 186 tremolo_messages 0;
 #X text 52 85 <rate> -;
 #X text 112 85 frequency in hertz;
@@ -146,8 +147,9 @@ de objetos [esa_tremolo_uni] que são enderaçados a cada pad, f 54
 #X text 46 65 <pad_n> -;
 #X text 112 65 float \, pad of this tremolo processor;
 #X msg 35 21 <pad_n> <rate> <depth> <dry-wet>;
-#X restore 181 265 pd tremolo_messages;
-#X text 23 163 Mensagens podem ser enviadas para [s tremolo_in] no
-formato:, f 61;
+#X restore 187 124 pd tremolo_messages;
+#X text 29 22 Mensagens podem ser enviadas para [s tremolo_in] no formato:
+, f 61;
+#X restore 173 202 pd tremolo_info;
 #X restore 11 29 pd info;
 #X obj 111 7 namecanvas \$0-tremolos;

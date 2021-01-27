@@ -5,7 +5,6 @@
 #X obj 167 158 player_outs \$1;
 #X obj 15 18 r player_in;
 #X obj 157 214 s player_out;
-#X obj 28 214 throw~ player~_\$1;
 #N canvas 222 288 344 285 cpu_saver 0;
 #X obj 31 21 inlet;
 #X obj 51 227 outlet;
@@ -28,13 +27,14 @@
 #X restore 234 107 pd cpu_saver;
 #X obj 38 91 t a a;
 #X obj 234 128 switch~;
+#X obj 28 214 throw~ player~_out;
 #X connect 0 0 2 0;
-#X connect 1 0 8 0;
+#X connect 1 0 7 0;
 #X connect 1 1 0 0;
-#X connect 2 0 6 0;
+#X connect 2 0 9 0;
 #X connect 2 1 3 0;
 #X connect 3 0 5 0;
 #X connect 4 0 1 0;
-#X connect 7 0 9 0;
-#X connect 8 0 2 0;
-#X connect 8 1 7 0;
+#X connect 6 0 8 0;
+#X connect 7 0 2 0;
+#X connect 7 1 6 0;

@@ -1,26 +1,26 @@
-#N canvas 290 57 792 589 12;
+#N canvas 290 57 792 589 10;
 #X declare -lib else;
 #X declare -path rjlib/pd;
 #X declare -path rjlib/rj;
 #N canvas 329 114 450 300 synth_1 0;
 #X obj 65 254 outlet~;
 #X text 64 47 escreva seu synth aqui1;
-#X restore 114 293 pd synth_1;
+#X restore 123 343 pd synth_1;
 #X obj 662 58 declare -lib else;
 #X obj 627 11 declare -path rjlib/pd;
 #X obj 627 34 declare -path rjlib/rj;
-#X obj 62 442 outlet~;
-#X text 334 225 - melódicos;
-#X text 314 186 TIMBRES;
-#X text 334 205 - rítmicos;
-#X text 317 291 Cada timbre c/ até 4 presets;
+#X obj 71 492 outlet~;
+#X text 343 275 - melódicos;
+#X text 323 236 TIMBRES;
+#X text 343 255 - rítmicos;
+#X text 326 341 Cada timbre c/ até 4 presets;
 #N canvas 447 407 259 136 opções_de_synth 0;
 #X obj 10 10 bng 45 250 50 0 empty empty rjdj 8 20 0 13 -261682 -1
 -1;
 #X msg 10 66 \; pd-rjdj_algumas_opções vis 1;
 #X connect 0 0 1 0;
 #X coords 0 -1 1 1 45 45 2 10 10;
-#X restore 422 202 pd opções_de_synth;
+#X restore 431 252 pd opções_de_synth;
 #N canvas 33 237 568 321 rjdj_algumas_opções 0;
 #X text 13 7 SYNTHS:;
 #X text 111 40 - grungy and grainy console and cheap synth sounds;
@@ -41,25 +41,30 @@ and FM stage;
 #X text 106 274 - type B waveshaper;
 #X obj 56 274 s_wsb;
 #X restore 627 81 pd rjdj_algumas_opções;
-#X text 277 118 <--- sequencer;
-#X obj 16 34 vradio 15 1 0 8 empty empty empty 0 -8 0 10 -262144 -1
+#X text 286 168 <--- sequencer;
+#X obj 25 84 vradio 15 1 0 8 empty empty empty 0 -8 0 10 -262144 -1
 -1 0;
-#X text 38 32 seletor de timbre;
-#X obj 11 181 vsl 15 128 0 127 0 0 empty empty empty 0 -9 0 10 -262144
+#X text 47 82 seletor de timbre;
+#X obj 20 231 vsl 15 128 0 127 0 0 empty empty empty 0 -9 0 10 -262144
 -1 -1 0 1;
-#X text 30 181 processamento;
-#X text 365 316 - Kick;
-#X text 365 335 - Snare;
-#X text 365 354 - close Hit Hat;
-#X text 365 374 - open Hit Hat;
-#X text 365 394 - mallets (percussão?);
-#X text 365 438 - mudar com knob o timbre de um instrumento polimorfo
+#X text 39 231 processamento;
+#X text 374 366 - Kick;
+#X text 374 385 - Snare;
+#X text 374 404 - close Hit Hat;
+#X text 374 424 - open Hit Hat;
+#X text 374 444 - mallets (percussão?);
+#X text 374 488 - mudar com knob o timbre de um instrumento polimorfo
 ;
-#X text 385 460 - tipo no mesmo instrumento sai de kick passando por
+#X text 394 510 - tipo no mesmo instrumento sai de kick passando por
 snare indo até quem sabe um hithat, f 28;
-#X obj 241 112 tgl 35 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
+#X obj 250 162 tgl 35 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
 1;
-#X obj 108 61 else/keyboard 17 80 1 3 0 0 empty empty;
-#X obj 131 408 else/out~;
+#X obj 117 111 else/keyboard 17 80 1 3 0 0 empty empty;
+#X obj 140 458 else/out~;
+#X obj 355 95 r synth_in;
+#X obj 365 126 print Synth;
+#X obj 23 17 else/note 348 18 Menlo empty 0 0 0 0 0 255 255 255 0 0
+Synth;
 #X connect 0 0 4 0;
 #X connect 0 0 25 0;
+#X connect 26 0 27 0;

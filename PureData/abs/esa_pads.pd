@@ -1,0 +1,6 @@
+#N canvas 539 375 450 300 10;
+#X declare -path esa_sampler_abs;
+#X declare -path esa_looper_abs;
+#X obj 259 18 declare -path esa_sampler_abs;
+#X obj 259 37 declare -path esa_looper_abs;
+#X obj 71 37 esa_looper \$1 \$2;

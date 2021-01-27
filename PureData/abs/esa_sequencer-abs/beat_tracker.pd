@@ -1,0 +1,147 @@
+#N canvas 0 22 716 526 10;
+#X obj 65 83 else/quantizer;
+#X obj 35 22 inlet;
+#N canvas 61 294 450 422 anotações_sobre_subdivisão_de_tempo 0;
+#X text 47 19 Anotações sobre quantum;
+#X text 56 45 Com o quantum = 4 \, o phaser conta de 0 até 4 assim
+\, com quantum = n \, o phaser contará de 0 a n.;
+#X text 57 84 para sinalizar o final de um ciclo (phaser voltando a
+zero) \, estou usando o seguinte patch:;
+#N canvas 647 107 453 300 endbang 0;
+#X obj 69 33 inlet;
+#X obj 79 236 outlet;
+#X obj 89 77 sel 0, f 11;
+#X obj 134 127 f 0, f 4;
+#X obj 89 169 spigot 0;
+#X obj 89 101 t f b, f 8;
+#X obj 134 151 != 0;
+#X obj 89 192 bng 15 250 50 0 empty empty empty 17 7 0 10 -262144 -1
+-1;
+#X text 152 45 Envia um bang quando contagem volta a zero;
+#X text 169 157 retém se o número anterior não for diferente de
+zero, f 27;
+#X connect 0 0 2 0;
+#X connect 2 0 5 0;
+#X connect 2 1 3 1;
+#X connect 3 0 6 0;
+#X connect 4 0 7 0;
+#X connect 5 0 4 0;
+#X connect 5 1 3 0;
+#X connect 6 0 4 1;
+#X connect 7 0 1 0;
+#X restore 243 99 pd endbang;
+#X text 60 144 com [else/rescale] posso subdividir o compasso em quantas
+unidades de tempo eu desejar uma vez que eu saiba o valor do quantum
+e o valor da unidade de tempo da seguinte forma:;
+#X text 99 192 [else/rescale 0 <quantum> 0 <subdivisões>];
+#X text 60 264 no momento apenas consigo fazer subdivisões pares \,
+tercinas apresentam um erro do último tempo;
+#X text 60 324 com uma fase de 0-1 \, posso usar [else/rescale] para
+redimensionar a fase pro valor que eu presisar subdividir e depois
+com módulo [% <subdivisão>] ter o número que representa o índice
+da subdivião onde se encontra agora o transporte ou sequencer.;
+#X restore 453 92 pd anotações_sobre_subdivisão_de_tempo;
+#X text 379 54 retorna informações acerca de subdivisão de tempo
+da phase do abl_link~, f 40;
+#X obj 225 22 inlet;
+#X text 267 21 subdivisão;
+#X text 381 206 números de subdivisões suportados:;
+#X obj 55 461 outlet;
+#X text 72 479 índice da subdivisão;
+#X obj 256 461 outlet;
+#X text 273 479 fase (0-1);
+#X obj 126 239 v quantum;
+#X obj 65 216 t f b, f 10;
+#X obj 65 257 else/rescale 0 4 0 16;
+#X obj 65 372 % 16, f 7;
+#X obj 65 395 change;
+#X obj 65 105 t f f, f 24;
+#X text 399 434 retorna o índice da subdivisão e a phase da subdivisão
+(0-1), f 31;
+#X obj 266 394 else/wrap2 0 1;
+#X obj 188 211 t f f, f 16;
+#X obj 65 301 t f f, f 34;
+#X obj 266 414 else/quantizer;
+#X obj 283 106 else/initmess \$1;
+#N canvas 334 353 766 300 resolução 0;
+#X msg 68 169 1;
+#X msg 116 169 2;
+#X msg 168 169 4;
+#X msg 222 169 8;
+#X msg 278 169 16;
+#X msg 335 169 32;
+#X obj 38 11 inlet;
+#X obj 58 230 outlet;
+#X msg 388 169 64;
+#X msg 443 169 128;
+#X msg 493 169 256;
+#X msg 543 169 512;
+#X obj 68 92 moses 1.5;
+#X obj 131 92 moses 3;
+#X obj 181 92 moses 6;
+#X obj 233 92 moses 12;
+#X obj 288 92 moses 24;
+#X obj 344 92 moses 48;
+#X obj 399 92 moses 96;
+#X obj 455 92 moses 192;
+#X obj 516 92 moses 384;
+#X obj 577 92 moses 768;
+#X msg 593 169 1024;
+#X msg 643 169 2048;
+#X obj 647 92 moses 1536;
+#X connect 0 0 7 0;
+#X connect 1 0 7 0;
+#X connect 2 0 7 0;
+#X connect 3 0 7 0;
+#X connect 4 0 7 0;
+#X connect 5 0 7 0;
+#X connect 6 0 12 0;
+#X connect 8 0 7 0;
+#X connect 9 0 7 0;
+#X connect 10 0 7 0;
+#X connect 11 0 7 0;
+#X connect 12 0 0 0;
+#X connect 12 1 13 0;
+#X connect 13 0 1 0;
+#X connect 13 1 14 0;
+#X connect 14 0 2 0;
+#X connect 14 1 15 0;
+#X connect 15 0 3 0;
+#X connect 15 1 16 0;
+#X connect 16 0 4 0;
+#X connect 16 1 17 0;
+#X connect 17 0 5 0;
+#X connect 17 1 18 0;
+#X connect 18 0 8 0;
+#X connect 18 1 19 0;
+#X connect 19 0 9 0;
+#X connect 19 1 20 0;
+#X connect 20 0 10 0;
+#X connect 20 1 21 0;
+#X connect 21 0 11 0;
+#X connect 21 1 24 0;
+#X connect 22 0 7 0;
+#X connect 23 0 7 0;
+#X connect 24 0 22 0;
+#X connect 24 1 23 0;
+#X restore 256 140 pd resolução;
+#X text 388 225 1 \, 2 \, 4 \, 8 \, 16 \, 32 \, 64 \, 128 \, 256 \,
+512 \, 1024 \, 2048;
+#X connect 0 0 16 0;
+#X connect 1 0 0 0;
+#X connect 4 0 23 0;
+#X connect 11 0 13 2;
+#X connect 12 0 13 0;
+#X connect 12 1 11 0;
+#X connect 13 0 20 0;
+#X connect 14 0 15 0;
+#X connect 15 0 7 0;
+#X connect 16 0 12 0;
+#X connect 18 0 21 0;
+#X connect 19 0 13 4;
+#X connect 19 1 14 1;
+#X connect 20 0 14 0;
+#X connect 20 1 18 0;
+#X connect 21 0 9 0;
+#X connect 22 0 23 0;
+#X connect 23 0 19 0;

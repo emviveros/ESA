@@ -26,7 +26,6 @@
 #X obj 77 234 else/initmess 1;
 #X obj 33 70 t a a;
 #X obj 60 89 route on-off;
-#X floatatom 441 175 5 0 0 0 - - -;
 #X connect 2 0 3 0;
 #X connect 2 0 10 0;
 #X connect 2 1 4 0;

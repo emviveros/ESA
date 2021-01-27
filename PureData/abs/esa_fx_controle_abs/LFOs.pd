@@ -117,26 +117,27 @@
 #X restore 11 7 pd metapatch;
 #N canvas 521 212 419 468 info 0;
 #X text 23 63 Argumentos:;
-#X msg 30 187 <float-all> <<mensagem_de_controle>>;
-#X text 41 209 Sendo:;
-#X text 93 210 <float-all> -;
-#X text 183 210 (0-k) índice do [recorder];
-#X text 183 227 (all) todos os objetos [recorder];
-#X text 53 377 <float-all> -;
-#X text 143 377 (0-k) índice do [recorder];
-#X text 143 394 (all) todos os objetos [recorder];
 #X text 105 63 [esaLFO <float>];
 #X text 22 13 Abstração que cria banco de LFO's para processamento
 de efeitos, f 63;
 #X text 44 87 De acordo com argumento \$1 \, <float> \, cria a quantidade
-de objetos [esaLFO] que são enderaçados a cada pad, f 54;
-#X text 23 163 Mensagens podem ser enviadas para [s LFO_in] no formato:
+de objetos [esaLFO] que são endereçados a cada pad, f 54;
+#N canvas 482 240 450 355 LFO_info 1;
+#X msg 42 49 <float-all> <<mensagem_de_controle>>;
+#X text 53 71 Sendo:;
+#X text 105 72 <float-all> -;
+#X text 195 72 (0-k) índice do [recorder];
+#X text 195 89 (all) todos os objetos [recorder];
+#X text 65 239 <float-all> -;
+#X text 155 239 (0-k) índice do [recorder];
+#X text 155 256 (all) todos os objetos [recorder];
+#X text 35 25 Mensagens podem ser enviadas para [s LFO_in] no formato:
 , f 61;
-#X text 23 315 Retorno de mensagens podem ser recebidas através de
+#X text 35 177 Retorno de mensagens podem ser recebidas através de
 [r LFO_out] no formato:, f 52;
-#X msg 30 347 <float-all> <<valor_do_LFO>>;
-#X text 35 417 <valor_do_LFO> -;
-#X text 143 417 (-1 | 1);
+#X msg 42 209 <float-all> <<valor_do_LFO>>;
+#X text 47 279 <valor_do_LFO> -;
+#X text 155 279 (-1 | 1);
 #N canvas 406 299 514 266 LFO_messages 0;
 #X text 70 102 float;
 #X text 111 102 - frequency in hertz up to 100 (negative values accepted)
@@ -162,7 +163,8 @@ de objetos [esaLFO] que são enderaçados a cada pad, f 54;
 #X text 25 73 <<control_message>>;
 #X text 25 36 <pad_n> -> número do pad que contém este módulo;
 #X msg 127 7 <pad_n> <<control_message>>;
-#X restore 182 258 pd LFO_messages;
-#X text 15 257 <<mensagem_de_controle>> -;
+#X restore 194 120 pd LFO_messages;
+#X text 27 119 <<mensagem_de_controle>> -;
+#X restore 150 178 pd LFO_info;
 #X restore 11 29 pd info;
 #X obj 111 7 namecanvas \$0-lfos;

@@ -1,0 +1,50 @@
+#N canvas 356 399 520 300 10;
+#X declare -path esa_gravadores~_abs;
+#X declare -path esa_sampler_abs;
+#X declare -path esa_looper_abs;
+#X obj 296 9 declare -path esa_gravadores~_abs;
+#X obj 296 29 declare -path esa_sampler_abs;
+#X obj 296 48 declare -path esa_looper_abs;
+#X obj 85 134 - 1;
+#X obj 85 155 pack f f f;
+#X obj 85 113 poly 16 1, f 10;
+#X obj 85 176 clone sampler_pad 16;
+#X obj 75 227 outlet~;
+#X obj 55 20 r sampler_in;
+#X obj 372 193 buffers 2 1200 100;
+#X obj 372 212 gravador~ 1 101;
+#N canvas 562 223 641 484 Mensagem_sampler_in 0;
+#X text 32 25 O sampler recebe mensagens via [s sampler_in] no formato
+;
+#X msg 49 51 <message_type> <<control_message>>;
+#X text 75 81 <message_type>;
+#X text 93 106 midiNote <<control_message>> -;
+#X text 283 106 recebe par de float representando altura MIDI e velocity
+;
+#X text 45 192 Acionar sampler pad_n;
+#X text 200 192 pad_n = último pad acionado (pad atual);
+#X msg 48 227 sampler <float>;
+#X text 162 271 grava o conteúdo de pad_101 no buffer de pad_n;
+#X text 156 228 <float> = pad_n - grava conteúdo de pad_n no buffer
+de pad_100, f 63;
+#X text 173 288 essa mensagem é enviada pelo sequencer. Se essa mensagem
+não chegar o conteúdo é descartado;
+#X msg 48 271 sampler <valid>;
+#X msg 48 341 sampler <clear>;
+#X text 158 341 limpa o conteúdo do buffer pad_101;
+#X msg 48 391 sampler <rec>;
+#X text 158 391 grava novo conteúdo do buffer pad_100 descartando
+totalmente o anterior;
+#X restore 347 264 pd Mensagem_sampler_in;
+#X obj 85 80 route midiNote;
+#X text 243 99 para copiar arrays talvez usar ofelia;
+#X obj 202 120 else/openfile https://github.com/cuinjune/Ofelia/issues/41
+-h;
+#X connect 3 0 4 0;
+#X connect 4 0 6 0;
+#X connect 5 0 3 0;
+#X connect 5 1 4 1;
+#X connect 5 2 4 2;
+#X connect 6 0 7 0;
+#X connect 8 0 12 0;
+#X connect 12 0 5 0;
