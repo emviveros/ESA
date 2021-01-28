@@ -1,4 +1,4 @@
-#N canvas 356 399 520 300 10;
+#N canvas 200 183 520 300 10;
 #X declare -path esa_gravadores~_abs;
 #X declare -path esa_sampler_abs;
 #X declare -path esa_looper_abs;
@@ -11,8 +11,6 @@
 #X obj 85 176 clone sampler_pad 16;
 #X obj 75 227 outlet~;
 #X obj 55 20 r sampler_in;
-#X obj 372 217 buffers 2 1200 100;
-#X obj 372 236 gravador~ 1 101;
 #N canvas 562 223 641 484 Mensagem_sampler_in 0;
 #X text 32 25 O sampler recebe mensagens via [s sampler_in] no formato
 ;
@@ -44,25 +42,28 @@ totalmente o anterior;
 #N canvas 470 282 450 300 set_buffer 0;
 #X obj 94 96 inlet;
 #X obj 103 222 text define sampler_active_buffer;
-#X obj 113 150 v pad_0;
 #X text 19 16 Define objeto text 'sampler_active_buffer' com o buffer
 do pad atual para setar o buffer que o objeto [else/tabplayer] deve
 utilizar para efetuar a reprodução;
 #X msg 113 171 set set pad_\$1;
-#X text 208 173 <--, f 3;
+#X text 208 173 <--;
 #X text 231 166 seta buffers do sampler para buffer do pad atual,
 f 25;
-#X connect 0 0 2 0;
-#X connect 2 0 4 0;
-#X connect 4 0 1 0;
-#X restore 168 116 pd set_buffer;
+#X obj 113 150 v pad_n;
+#X connect 0 0 6 0;
+#X connect 3 0 1 0;
+#X connect 6 0 3 0;
+#X restore 176 107 pd set_buffer;
+#X obj 372 217 buffers 1 1200 100;
+#X obj 371 196 buffer -1 1;
+#X obj 372 236 gravador~ 1 100;
 #X connect 3 0 4 0;
 #X connect 4 0 6 0;
 #X connect 5 0 3 0;
 #X connect 5 1 4 1;
 #X connect 5 2 4 2;
 #X connect 6 0 7 0;
-#X connect 8 0 12 0;
-#X connect 12 0 15 0;
-#X connect 15 0 5 0;
-#X connect 15 1 16 0;
+#X connect 8 0 10 0;
+#X connect 10 0 13 0;
+#X connect 13 0 5 0;
+#X connect 13 1 14 0;

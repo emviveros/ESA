@@ -21,6 +21,7 @@ local Quantidade_de_pads = 16    --[[ quantidade de pads do instrumento (padrão
 --[[ processadores DSP controlados via sequenciador ]]
 --[[ Em caso de alteração, verificar PadSeq[i][j] em inicializar_PadSeq() ]]
 local Processadores = {'sampler', 'synth', 'fx'}
+local logs = 1  --[[ referente ao controle de mensagens de retorno na console do Pd ]]
 
 
 --[[---------------------------------------------------------------------------
@@ -236,13 +237,49 @@ local function resetar_mensagens_do_evento(phase_idx, pad_idx, processador)
     PadSeq[phase_idx][pad][processador]={-1}
 end
 
+
+--[[ Controla envio de mensagens no Pd console ]]
+function M.logs(a)
+    if a==0 then
+        logs = 0
+    else
+        logs = 1
+    end
+end
+
 --[[ Retorna mensagem de erro no console do Pd ]]
 local function erro(a)
     local log = ofLog();
     local msg = a
 
-    log:error(tostring(msg))
+    if logs==1 then log:error(tostring(msg)) end
 end
+
+--[[ Retorna mensagem de aviso no console ]]
+local function aviso(a)
+    local log = ofLog()
+    local msg = a
+
+    if logs ==1 then log:post(tostring(msg)) end
+end
+
+
+--[[ Retorna erro em caso de recebimento de mensagens fora da formatação ]]
+function M.list(a)
+    local out = ''
+    for i=1, #a do out = out..a[i]..' ' end
+    erro('ESA E2-A2_Sequencer - Recebida mensagem inválida:'..out)
+end
+function M.float(f)
+    erro('ESA E2-A2_Sequencer - Recebida mensagem inválida: '..f)
+end
+function M.bang()
+    erro('ESA E2-A2_Sequencer - Recebida mensagem inválida: bang')
+end
+function M.symbol(s)
+    erro('ESA E2-A2_Sequencer - Recebida mensagem inválida: symbol '..s)
+end
+
 
 --[[ Processa mensagens vindas do Sampler ]]
 function M.sampler(a)
@@ -306,7 +343,9 @@ function M.notein(entrada)
 
     else
         erro('[esa_sequencer](E2-A2) - nenhum instrumento selecionado')
-        erro(entrada)
+        local saida = ''
+        for i=1, #entrada do saida = saida..' '..tostring(entrada[i])..' ' end
+        aviso('mensagem MIDI recebida: notein '..saida)
     end
 end
 

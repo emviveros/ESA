@@ -345,6 +345,25 @@ fluxo para fora e os dados são exibidos somente no console do Pd.
 #X floatatom 302 544 5 0 0 0 - - -;
 #X obj 22 190 else/note 425 18 Menlo empty 0 0 0 0 0 255 255 255 0
 0 esa_sequencer;
+#N canvas 166 157 782 307 teste_ofelia_entradas 0;
+#X text 677 229 comment;
+#X obj 396 188 print outlet_0;
+#X obj 538 192 print outlet_1;
+#X obj 394 50 bng 15 250 50 0 empty empty empty 17 7 0 10 -262144 -1
+-1;
+#X obj 407 87 ofelia d -c12 \; local out=ofOutlet(this) \; function
+M.bang() \; for i=1 \, 10 do \; out:outletList(0 \, ofTable(i+10))
+\; end \; out:outletList(1 \, ofTable('end')) \; end \;;
+#X connect 3 0 4 0;
+#X connect 4 0 1 0;
+#X connect 4 1 2 0;
+#X restore 711 313 pd teste_ofelia_entradas;
+#X obj 63 334 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
+1;
+#X msg 63 353 logs \$1;
+#X obj 50 289 else/initmess 0;
+#X text 19 370 liga/desl msgs console;
+#X obj 50 310 pipe 1000;
 #X connect 0 0 63 0;
 #X connect 2 0 63 1;
 #X connect 3 0 64 0;
@@ -392,3 +411,7 @@ fluxo para fora e os dados são exibidos somente no console do Pd.
 #X connect 86 1 10 0;
 #X connect 86 2 42 0;
 #X connect 87 0 48 0;
+#X connect 91 0 92 0;
+#X connect 92 0 72 0;
+#X connect 93 0 95 0;
+#X connect 95 0 91 0;
