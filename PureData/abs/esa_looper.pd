@@ -1,4 +1,4 @@
-#N canvas 643 511 450 111 10;
+#N canvas 368 148 497 286 10;
 #X text 171 42 ToDo:;
 #X text 186 59 - Documentar esta sessão;
 #X obj 10 9 looper_buffers \$1 \$2;

@@ -1,6 +1,6 @@
-#N canvas 819 131 280 105 10;
+#N canvas 819 131 448 277 10;
 #X declare -path esa_player~_abs;
-#N canvas 391 347 794 329 player_message_processor 0;
+#N canvas 126 273 794 329 player_message_processor 1;
 #X obj 42 57 list split 1, f 22;
 #X obj 117 86 list trim;
 #X obj 42 189 list trim;
@@ -49,7 +49,7 @@
 #X msg 577 251 <pad> <<control_message>>;
 #X obj 117 114 route start stop pause resume loop play speed, f 88
 ;
-#N canvas 671 53 247 300 play 0;
+#N canvas 671 53 247 300 play 1;
 #X obj 31 26 inlet;
 #X obj 61 232 outlet;
 #X obj 61 83 list prepend play;
@@ -65,12 +65,24 @@
 #X connect 0 0 2 0;
 #X connect 2 0 1 0;
 #X restore 642 141 pd speed;
-#N canvas 0 22 256 166 error 0;
+#N canvas 250 256 457 329 error 0;
 #X obj 30 30 inlet;
-#X obj 31 92 print -n;
-#X msg 30 70 invalid message to player;
+#X obj 50 260 mensagem_de_erro;
+#X obj 60 91 t b a, f 47;
+#X obj 60 181 list append, f 43;
+#X obj 60 202 list trim;
+#X msg 60 130 [esa_pads](E3-D2) - Mensagem inválida:;
+#X obj 339 113 route bang;
+#X msg 339 133 symbol bang;
 #X connect 0 0 2 0;
-#X connect 2 0 1 0;
+#X connect 2 0 5 0;
+#X connect 2 1 6 0;
+#X connect 3 0 4 0;
+#X connect 4 0 1 0;
+#X connect 5 0 3 0;
+#X connect 6 0 7 0;
+#X connect 6 1 3 1;
+#X connect 7 0 3 1;
 #X restore 711 140 pd error;
 #X obj 21 16 r player~_entrada;
 #X obj 42 289 s player_in;
@@ -123,6 +135,6 @@ from start to end. 1st float sets start \, 2nd sets end (in ms) and
 #X connect 11 0 6 1;
 #X connect 12 0 6 1;
 #X connect 14 0 0 0;
-#X restore 13 46 pd player_message_processor;
-#X obj 94 8 declare -path esa_player~_abs;
-#X obj 12 66 players \$1 \$2;
+#X restore 30 93 pd player_message_processor;
+#X obj 249 14 declare -path esa_player~_abs;
+#X obj 30 113 players \$1 \$2;
