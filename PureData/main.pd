@@ -1,5 +1,5 @@
-#N struct 2314-cell float x float y float cellsize float color;
-#N canvas 526 237 538 269 10;
+#N struct 2315-cell float x float y float cellsize float color;
+#N canvas 521 247 538 269 10;
 #X declare -lib else;
 #X declare -path abl_link~;
 #X declare -path rjlib/rj;
@@ -1021,7 +1021,7 @@ Efeitos de Masterização;
 #X coords 0 -1 1 1 109 22 2 10 10;
 #X restore 19 13 pd doc_E4;
 #X restore 12 74 pd E4-Processamento_de_Áudio_Mixagem;
-#N canvas 499 371 597 330 gui 0;
+#N canvas 609 107 616 336 gui 0;
 #N canvas 191 187 346 132 pd 0;
 #X obj 20 40 cnv 10 60 28 empty empty empty 9 15 0 18 -66577 -228856
 0;
