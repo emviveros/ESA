@@ -1,22 +1,20 @@
 #N canvas 0 22 450 300 10;
 #X obj 122 203 else/note.out;
-#X msg 122 102 60 100;
-#X obj 122 123 t a b;
-#X msg 153 161 60 0;
-#X obj 153 142 del 50;
 #X obj 122 184 unpack;
 #X obj 112 254 midiout;
 #X obj 92 22 inlet;
 #X text 200 46 bang para tocar uma nota em instrumento MIDI externo
 , f 27;
-#X text 240 113 Para ouvir som usar instrumento externo ao Pd e rotear
+#X text 240 141 Para ouvir som usar instrumento externo ao Pd e rotear
 a saída MIDI do Pd ao instrumento, f 31;
-#X connect 0 0 6 0;
-#X connect 1 0 2 0;
-#X connect 2 0 5 0;
-#X connect 2 1 4 0;
-#X connect 3 0 5 0;
-#X connect 4 0 3 0;
-#X connect 5 0 0 0;
-#X connect 5 1 0 1;
-#X connect 7 0 1 0;
+#X obj 106 137 route midiNote;
+#X obj 106 82 route sampler;
+#X obj 181 104 route synth;
+#X connect 0 0 2 0;
+#X connect 1 0 0 0;
+#X connect 1 1 0 1;
+#X connect 3 0 7 0;
+#X connect 6 0 1 0;
+#X connect 7 0 6 0;
+#X connect 7 1 8 0;
+#X connect 8 0 6 0;

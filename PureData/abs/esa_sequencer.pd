@@ -178,8 +178,8 @@ dimensão = resolução * (quantum +1), f 51;
 #N canvas 331 339 514 332 gravar-reproduzir 0;
 #X obj 66 40 inlet;
 #X obj 331 44 inlet;
-#X obj 53 265 outlet;
-#X obj 221 265 outlet;
+#X obj 53 295 outlet;
+#X obj 221 295 outlet;
 #X obj 96 149 else/router, f 23;
 #X obj 231 131 + 1;
 #N canvas 484 186 511 358 calculo_índice 0;
@@ -245,7 +245,8 @@ dimensão = resolução * (quantum +1), f 51;
 #X text 272 115 0 -> grava;
 #X text 272 127 1 -> reproduz;
 #X obj 231 204 list append;
-#X text 275 244 'play' <idx> <pad_n>;
+#X text 295 243 'play' <idx> <pad_n>;
+#X obj 231 244 list trim;
 #X connect 0 0 6 0;
 #X connect 1 0 5 0;
 #X connect 4 0 2 0;
@@ -255,15 +256,16 @@ dimensão = resolução * (quantum +1), f 51;
 #X connect 7 0 14 1;
 #X connect 8 0 14 0;
 #X connect 8 1 7 0;
-#X connect 9 0 3 0;
+#X connect 9 0 16 0;
 #X connect 14 0 9 0;
+#X connect 16 0 3 0;
 #X restore 602 91 pd gravar-reproduzir;
 #X obj 719 56 vradio 15 1 0 2 empty empty empty 0 -8 0 10 -262144 -1
 -1 0;
 #X text 737 58 gravar;
 #X text 737 73 reproduzir;
 #X obj 706 35 else/initmess 0;
-#X obj 476 353 teste_sequenciador_lua;
+#X obj 451 335 teste_sequenciador_lua;
 #X obj 790 192 declare -path ../;
 #X obj 169 369 ofelia d -c13 \$0-seq;
 #X text 195 458 Sequencer->Synth;
@@ -364,6 +366,119 @@ M.bang() \; for i=1 \, 10 do \; out:outletList(0 \, ofTable(i+10))
 #X obj 50 289 else/initmess 0;
 #X text 19 370 liga/desl msgs console;
 #X obj 50 310 pipe 1000;
+#X msg 678 61 0;
+#X text 588 190 'play' <idx> <pad_n>;
+#X text 94 171 'notein' <idx><pad_n><<notein>>;
+#N canvas 0 22 450 300 teste_ativa_pads 0;
+#X obj 49 60 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0 1
+;
+#X obj 66 60 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0 1
+;
+#X obj 83 60 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0 1
+;
+#X obj 100 60 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
+1;
+#X obj 49 79 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0 1
+;
+#X obj 66 79 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0 1
+;
+#X obj 83 79 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0 1
+;
+#X obj 100 79 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
+1;
+#X msg 169 83 \$1 0;
+#X msg 210 83 \$1 1;
+#X msg 249 83 \$1 2;
+#X msg 289 83 \$1 3;
+#X msg 169 103 \$1 4;
+#X msg 210 103 \$1 5;
+#X msg 249 103 \$1 6;
+#X msg 289 103 \$1 7;
+#X obj 49 99 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0 1
+;
+#X obj 66 99 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0 1
+;
+#X obj 83 99 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0 1
+;
+#X obj 100 99 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
+1;
+#X obj 49 118 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
+1;
+#X obj 66 118 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
+1;
+#X obj 83 118 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
+1;
+#X obj 100 118 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
+1;
+#X msg 169 122 \$1 8;
+#X msg 210 122 \$1 9;
+#X msg 249 122 \$1 10;
+#X msg 289 122 \$1 11;
+#X msg 169 142 \$1 12;
+#X msg 210 142 \$1 13;
+#X msg 249 142 \$1 14;
+#X msg 289 142 \$1 15;
+#X obj 51 148 bng 15 250 50 0 empty empty tabela 17 7 0 10 -262144
+-1 -1;
+#X obj 224 237 s E3-D1_controles_looper;
+#X msg 37 254 show;
+#X obj 51 169 bng 15 250 50 0 empty empty resetar 17 7 0 10 -262144
+-1 -1;
+#X msg 162 7 0;
+#X connect 0 0 8 0;
+#X connect 1 0 9 0;
+#X connect 2 0 10 0;
+#X connect 3 0 11 0;
+#X connect 4 0 12 0;
+#X connect 5 0 13 0;
+#X connect 6 0 14 0;
+#X connect 7 0 15 0;
+#X connect 8 0 33 0;
+#X connect 9 0 33 0;
+#X connect 10 0 33 0;
+#X connect 11 0 33 0;
+#X connect 12 0 33 0;
+#X connect 13 0 33 0;
+#X connect 14 0 33 0;
+#X connect 15 0 33 0;
+#X connect 16 0 24 0;
+#X connect 17 0 25 0;
+#X connect 18 0 26 0;
+#X connect 19 0 27 0;
+#X connect 20 0 28 0;
+#X connect 21 0 29 0;
+#X connect 22 0 30 0;
+#X connect 23 0 31 0;
+#X connect 24 0 33 0;
+#X connect 25 0 33 0;
+#X connect 26 0 33 0;
+#X connect 27 0 33 0;
+#X connect 28 0 33 0;
+#X connect 29 0 33 0;
+#X connect 30 0 33 0;
+#X connect 31 0 33 0;
+#X connect 32 0 34 0;
+#X connect 34 0 33 0;
+#X connect 35 0 36 0;
+#X connect 36 0 0 0;
+#X connect 36 0 23 0;
+#X connect 36 0 22 0;
+#X connect 36 0 21 0;
+#X connect 36 0 20 0;
+#X connect 36 0 19 0;
+#X connect 36 0 18 0;
+#X connect 36 0 17 0;
+#X connect 36 0 16 0;
+#X connect 36 0 7 0;
+#X connect 36 0 6 0;
+#X connect 36 0 5 0;
+#X connect 36 0 4 0;
+#X connect 36 0 3 0;
+#X connect 36 0 2 0;
+#X connect 36 0 1 0;
+#X coords 0 -1 1 1 125 180 1 20 20;
+#X restore 758 351 pd teste_ativa_pads;
+#X obj 443 563 else/display;
 #X connect 0 0 63 0;
 #X connect 2 0 63 1;
 #X connect 3 0 64 0;
@@ -398,6 +513,7 @@ M.bang() \; for i=1 \, 10 do \; out:outletList(0 \, ofTable(i+10))
 #X connect 65 1 77 0;
 #X connect 66 0 65 1;
 #X connect 69 0 66 0;
+#X connect 70 0 100 0;
 #X connect 72 0 86 0;
 #X connect 72 1 86 1;
 #X connect 72 2 86 2;
@@ -415,3 +531,4 @@ M.bang() \; for i=1 \, 10 do \; out:outletList(0 \, ofTable(i+10))
 #X connect 92 0 72 0;
 #X connect 93 0 95 0;
 #X connect 95 0 91 0;
+#X connect 96 0 65 1;

@@ -1,5 +1,9 @@
 --[[---------------------------------------------------------------------------
     Lua script com código para acesso a inlets e outlets do objeto [abl_link~]
+
+                                                    Esteban Viveros 2021
+                                        https://github.com/emviveros/ESA
+
 -------------------------------------------------------------------------------]]
 
 

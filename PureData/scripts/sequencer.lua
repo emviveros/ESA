@@ -1,12 +1,15 @@
 --[[--------------------------- CABEÇALHO --------------------------------------
     Lua script do [esa_sequencer]
 
-        Este sequencer analiza e armazena os dados que chegam ao sequencer
+        Este sequencer analiza e armazena os dados válidos que chegam
         em tabelas para servir na automação de parâmetros e instrumentos
         presentes no patch.
 
         O objeto [ofelia d $0-seq] se encontra em:
         E2-A2 -> [pd message_manager]
+
+                                                    Esteban Viveros 2021
+                                        https://github.com/emviveros/ESA
 
 -------------------------------------------------------------------------------]]
 
@@ -16,7 +19,11 @@ local SynthStatus = 0     --[[0 -> off, 1 -> on]]
 local Dimensao = ofValue("padSeq_dim")    --[[ recupera valor da dimensão da tabela PadSeq ]]
 local PadSeq_dim = Dimensao:get() --[[ calculada a partir do valor da resolução do sequenciador ]]
                                   --[[ em E2-A2 [pd sequencer_timestamp]->[pd init_Seq_dim] ]]
-local Quantidade_de_pads = 16    --[[ quantidade de pads do instrumento (padrão 16) ]]
+local Pads_estado = ofArray("pads_ativos")  --[[ recupera pd array com estado de ativação dos pads ]]
+                                            --[[ em: E3-D1->[controles_looper] ]]
+--[[ tabela com o estado de ativação dos pads ]]
+local Estado_do_pad = {-1}
+local Quantidade_de_pads = #Estado_do_pad    --[[ quantidade de pads do instrumento ]]
 
 --[[ processadores DSP controlados via sequenciador ]]
 --[[ Em caso de alteração, verificar PadSeq[i][j] em inicializar_PadSeq() ]]
@@ -113,6 +120,14 @@ local function inicializar_PadSeq(pads)
     --debug_saida_inicializar_PadSeq(pads)
 end
 
+
+--[[ Atualizar estado de atividade dos pads ]]
+local function atualizar_estado_de_atividade_dos_pads()
+    for i=1, Pads_estado:getSize() do Estado_do_pad[i] = Pads_estado:getAt(i-1) end
+    Quantidade_de_pads = #Estado_do_pad
+end
+
+
 --[[ debug de adicionar_evento ]]
 local function debug_entrada_adicionar_evento(idx, pad_idx, processador, mensagem)
     print('---------------------------------')
@@ -187,11 +202,12 @@ local function debug_retorna_mensagens_no_indice(idx, pad_idx, i, processador, j
     print('------------------- - FIM - -------------------')
     print('')
 end
-local function debug_mensagem_de_saida_formatada_em_retorna_mensagens_no_indice(out, out_idx,n)
+local function debug_mensagem_de_saida_formatada_em_retorna_mensagens_no_indice(out, out_idx, p, n)
     print('-----------------------------------------------------------------------------')
     print('--- debug_mensagem_formatada_em_retorna_mensagens_no_indice() ---')
     print('---------------------------------- SAÍDAS -----------------------------------')
     print('mensagens a recuperar -> n = ', n)
+    print('pad do laço -> p = ', p)
     print('#out = ', table.map_length(out))
     print('#out[out_idx] = ', table.map_length(out[out_idx]))
     print('out[out_idx] = ', out[out_idx])
@@ -199,29 +215,44 @@ local function debug_mensagem_de_saida_formatada_em_retorna_mensagens_no_indice(
     print('-------------------------------- - FIM - ------------------------------------')
     print('')
 end
+local function debug_pads_ativos()
+    for i=1, Quantidade_de_pads do
+        print('Estado_do_pad[', i-1, '] = ', Estado_do_pad[i])
+    end
+end
 
 --[[ Retorna mensagens contidas em um pad especifico (se houver mensagens) ]]
-local function retorna_mensagens_no_indice(idx, pad_idx)
-    local out={}
+local function retorna_mensagens_no_indice(idx)
+    local out = {}; out[1] = {-1}     --[[ inicialização da variável de saída de dados ]]
     local out_idx = 1   --[[ contador de mensagens a retornar de PadSeq[idx][pad_idx] ]]
+
+    atualizar_estado_de_atividade_dos_pads()
+    --debug_pads_ativos()
 
     for i=1, table.map_length(Processadores) do --[[ varre todos os processadores ]]
         local processador = Processadores[i]
 
-        --[[ segue se processador tiver mensagens ]]
-        if (PadSeq[idx][pad_idx][processador][1][1] ~= -1) then
-            local n = table.map_length(PadSeq[idx][pad_idx][processador]) --[[ quantas mensagens no processador ]]
+        --[[ varre pads ativos e segue se pad estiver ativado ]]
+        for p=1, Quantidade_de_pads do
+            if (Estado_do_pad[p] == 1) then
+                --[[ segue se processador tiver mensagens ]]
+                if (PadSeq[idx][p][processador][1][1] ~= -1 or nil) then
+                    --[[ quantas mensagens no processador ]]
+                    local n = table.map_length(PadSeq[idx][p][processador])
 
-            --[[ varre mensagens em PadSeq[idx][pad_idx][processador] ]]
-            for j=1, n do
-                out[out_idx] = {}
-                out[out_idx] = {processador}   --[[ adiciona nome do processador a mensagem de saída ]]
-                --[[ varre conteúdo de cada mensagem em PadSeq[idx][pad_idx][processador] ]]
-                for k=1, table.map_length(PadSeq[idx][pad_idx][processador][j]) do
-                    out[out_idx][k+1] = PadSeq[idx][pad_idx][processador][j][k] --[[ adiciona mensagem à mensagem da saída ]]
+                    --[[ varre mensagens em PadSeq[idx][pad_idx][processador] ]]
+                    for j=1, n do
+                        out[out_idx] = {}
+                        out[out_idx] = {processador}   --[[ adiciona nome do processador a mensagem de saída ]]
+                        --[[ varre conteúdo de cada mensagem em PadSeq[idx][pad_idx][processador] ]]
+                        for k=1, table.map_length(PadSeq[idx][p][processador][j]) do
+                            --[[ adiciona mensagem à mensagem da saída ]]
+                            out[out_idx][k+1] = PadSeq[idx][p][processador][j][k]
+                        end
+                        --debug_mensagem_de_saida_formatada_em_retorna_mensagens_no_indice(out, out_idx, p, n)
+                        out_idx = out_idx + 1
+                    end
                 end
-                --debug_mensagem_de_saida_formatada_em_retorna_mensagens_no_indice(out, out_idx, n)
-                out_idx = out_idx + 1
             end
         end
     end
@@ -358,6 +389,7 @@ end
 
 --[[ Inicialização do Sequencer ]]
 local function init_sequencer()
+    atualizar_estado_de_atividade_dos_pads()
     inicializar_PadSeq(Quantidade_de_pads)
     print('[esa_sequencer](E2-A2) - Sequenciador Inicializado')
 end
@@ -365,6 +397,7 @@ end
 
 --[[ Reseta o sequencer - apaga todos os valores armazenados ]]
 function M.reset()
+    atualizar_estado_de_atividade_dos_pads()
     inicializar_PadSeq(Quantidade_de_pads)
     erro('[esa_sequencer](E2-A2) - Sequenciador Resetado')
 end
@@ -377,12 +410,11 @@ end
 
 
 --[[ debug de M.play() ]]
-local function debug_Mplay(entrada, pad_idx, idx, out)
+local function debug_Mplay(entrada, idx, out)
     print('---------------------------')
     print('-------- debug_M.play() --------')
-    print('-- ENTRADA:',#entrada..' elementos -> ',entrada[1]..', ',entrada[2])
+    print('-- ENTRADA:',entrada)
     print('idx = ', idx)
-    print('pad_idx = ', pad_idx)
     print('out = ', out)
     local dim = table.map_length(out)
     print('quantidade de elementos em out = ', dim)
@@ -398,11 +430,10 @@ function M.play(entrada)
     --[[ relacionado ao controle do fluxo de dados dos outlets do objeto ofelia ]]
     local saida=ofOutlet(this)
 
-    local idx = entrada[1] + 1
-    local pad_idx = entrada[2] + 1
-    local out = retorna_mensagens_no_indice(idx, pad_idx)
+    local idx = entrada + 1
+    local out = retorna_mensagens_no_indice(idx)
 
-    --debug_Mplay(entrada, pad_idx, idx, out)
+    -- debug_Mplay(entrada, idx, out)
 
     if (out[1][1] ~= -1) then
         for i=1, table.map_length(out) do
