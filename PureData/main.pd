@@ -1,5 +1,5 @@
-#N struct 2316-cell float x float y float cellsize float color;
-#N canvas 661 45 538 269 10;
+#N struct 2318-cell float x float y float cellsize float color;
+#N canvas 1054 -977 538 269 10;
 #X declare -lib else;
 #X declare -path abl_link~;
 #X declare -path rjlib/rj;
@@ -86,38 +86,106 @@
 #X coords 0 -1 1 1 86 22 2 10 10;
 #X restore 435 73 pd estruturas;
 #X obj 436 14 cpuMeter;
-#N canvas 666 193 478 500 ToDo 0;
-#X text 41 332 - disponibilizar botão de modo Loop para [[looper]]
+#N canvas 1071 -635 478 541 ToDo 1;
+#X text 41 379 - disponibilizar botão de modo Loop para [[looper]]
 ;
-#X text 31 319 - Criar e documentar modo Loop do [[looper]];
-#X text 31 365 - Tratar entrada do microfone (cliques no sampler) (??)
+#X text 31 366 - Criar e documentar modo Loop do [[looper]];
+#X text 31 412 - Tratar entrada do microfone (cliques no sampler) (??)
 ;
-#X text 31 275 - Melhorar consumo de CPU pra evitar cliques;
-#X text 31 195 - Implementar mensagens dos FXs;
-#X text 41 210 - documentar;
-#X text 51 40 - retornar mensagens armazenadas no próximo ciclo de
+#X text 31 322 - Melhorar consumo de CPU pra evitar cliques;
+#X text 31 242 - Implementar mensagens dos FXs;
+#X text 41 257 - documentar;
+#X text 51 36 - retornar mensagens armazenadas no próximo ciclo de
 compassos, f 62;
 #X text 31 15 - Criar o sequencer em E2-A2;
-#X text 31 397 - Implementar quantização da saída do Sequencer;
-#X text 31 425 - Implementar quantização do primeiro ataque de uma
+#X text 31 444 - Implementar quantização da saída do Sequencer;
+#X text 31 472 - Implementar quantização do primeiro ataque de uma
 gravação em Sampler/Looper;
-#X obj 55 239 else/openfile https://forum.pdpatchrepo.info/topic/13253/fx3000-30-effect-abstraction-for-use-with-guitar-stompboxes-effects-racks-etc
+#X obj 55 286 else/openfile https://forum.pdpatchrepo.info/topic/13253/fx3000-30-effect-abstraction-for-use-with-guitar-stompboxes-effects-racks-etc
 -h;
-#X text 51 57 - implementar recepção de mensagens MIDI ctlin, f
+#X text 51 104 - implementar recepção de mensagens MIDI ctlin, f
 62;
-#X text 51 94 - implementar recepção de mensagens para Efeitos,
+#X text 51 141 - implementar recepção de mensagens para Efeitos,
 f 62;
-#X text 51 112 - modificar a estrutura de dados para garantir retorno
+#X text 51 159 - modificar a estrutura de dados para garantir retorno
 de mensagens na mesma ordem de entrada tb para entradas simultâneas
 (mesmo índice [idx]) (Não é urgente);
-#X text 31 155 - Implementar Sampler integrado com Sequencer;
-#X text 41 225 - implementar mais efeitos(?)(não é urgente):;
-#X text 41 287 - já melhorou muito! agora cuidar pra manter performance
+#X text 31 202 - Implementar Sampler integrado com Sequencer;
+#X text 41 272 - implementar mais efeitos(?)(não é urgente):;
+#X text 41 334 - já melhorou muito! agora cuidar pra manter performance
 ;
-#X text 41 168 - esquema de buffer temporário com o buffer do Looper
+#X text 41 215 - esquema de buffer temporário com o buffer do Looper
 ;
-#X text 51 76 - implementar buffer de dados do sequencer (1 compasso)
+#X text 51 123 - implementar buffer de dados do sequencer (1 compasso)
 , f 62;
+#N canvas 835 -724 510 680 como_fazer 1;
+#X text 21 27 No último pad ativado \,;
+#X text 31 47 Sempre sequencer começa a gravar eventos NAQUELE pad
+\, e só naquele pad, f 71;
+#X text 31 77 A gravação acontece em um buffer de 1 compasso., f
+71;
+#X text 43 157 Com o valor de cada índice \, o sequencer mapeia qual
+é o compasso do ciclo atual., f 69;
+#X text 43 97 O compasso pode ser o compasso 1 \, 2 \, 3 ou 4 da frase
+\, para saber \, o sequencer calculará de acordo com o índice e o
+valor do quantum (pra saber a faixa de valores do phase do [abl_link~]
+\, que é quem gera os índices), f 69;
+#N canvas 471 398 450 300 diretrizes 0;
+#X obj 67 30 else/click 1;
+#X msg 67 51 \; pd-diretrizes_de_criação_do_sequencer vis 1;
+#X connect 0 0 1 0;
+#X restore 164 26 pd diretrizes;
+#X text 31 197 O buffer será copiado para a tabela principal do sequencer
+caso tenha recebido alguma entrada., f 71;
+#X text 31 227 O buffer será copiado para a tabela principal do sequencer
+no índice referente a ao compasso global no momento da recepção
+dos eventos, f 71;
+#X text 31 267 Para garantir que o sequencer fique em loop na quantidade
+de compassos ativados \, arrumar um módulo \, ou algo do gênero no
+índice da tabela completa pra:, f 71;
+#X text 43 307 Se for ativado em 1 compasso \, ficar dando loop no
+primeiro 1/4 da tabela, f 69;
+#X text 43 337 Se for ativado em 2 compassos \, ficar dando loop na
+primeira metade da tabela, f 69;
+#X text 43 367 Se for ativado em 3 compassos \, ficar dando loop nos
+primeiros 3/4 da tabela, f 69;
+#X text 43 397 Se for ativado em 4 compassos \, ficar dando loop na
+tabela completa, f 69;
+#X text 31 418 Para que 3/4 funcione em um loop de áudio posterior
+\, será necessário que o buffer de áudio em loop seja do tamanho
+necessário para que os compassos voltem ao estado inicial. Ou seja
+\, se houver um ciclo de 3/4 do tamanho \, para trnasformar isso em
+áduio depois o loop de áudio terá 4, f 71;
+#X text 43 479 Após 4 voltas completas \, a saída do buffer de áudio
+deve se repertir. Assim o buffer de áudio deverá ter 4 ciclos para
+comportar o novo ciclo., f 69;
+#X text 43 529 OU reescrevo tudo com POO com uma tabela em estrutura
+próxima a de agora por pad. Assim escrever métodos que retornem em
+loop os compassos gravados (com número de compassos parametrizados).
+Instancío um objeto com pad., f 69;
+#X text 43 589 Quando der play em um pad \, começa a reproduzir com
+síntese em tempo real. Compasso é substituído por um novo se houver
+alguma entrada no compasso. Ao dar play em um novo pad \, o conteúdo
+do pad anterior é gravado no buffer de áudio do pad anterior para
+reprodução em loop, f 69;
+#X text 260 7 AGORA REESCREVENDO COM POO!!!!;
+#N canvas 621 157 450 300 POO 0;
+#X text 53 21 A montagem das mensagens do Sampler \, Synth e Efeitos
+\, terão classes dedicadas para cada.;
+#X text 53 61 Essas classes serão importadas através de require na
+classe Pad;
+#X text 53 101 Os objetos ofelia com as classes de mensagem de cada
+Processador fica no subpatch ou abstração do Processador.;
+#X text 53 148 Classe para controle dos sequenciadores dos pads \,
+que tem como tarefa enviar os índices corretos para viabilizar a reprodução
+dos eventos em loop. A ativação acontecerá via leitura do array
+pads_ativos;
+#X restore 258 26 pd POO;
+#X restore 69 57 pd como_fazer;
+#N canvas 861 -619 450 460 processo 1;
+#X text 43 29 - parar e pensar como implementar a inteligência que
+a Julia pediu;
+#X restore 160 57 pd processo;
 #X restore 475 127 pd ToDo;
 #X obj 435 98 esa_diagramas;
 #N canvas 266 191 534 157 T-Geradora_de_sinal_temporal 0;
@@ -520,7 +588,7 @@ dos pads, f 22;
 #X restore 49 95 pd M2-tradução_de_mensagens_MIDI_para_ESA-API;
 #X restore 12 15 pd E1-Processamento_de_mensagens_de_entrada;
 #N canvas 37 22 568 168 E2-Armazenamento_de_mensagens 0;
-#N canvas 367 147 450 300 A1-Processador_de_requisições 0;
+#N canvas 624 31 450 300 A1-Processador_de_requisições 0;
 #N canvas 404 435 649 300 controle_do_sampler 0;
 #N canvas 453 242 450 300 sampler_mensagens 0;
 #X obj 90 25 else/click 1;
@@ -549,14 +617,14 @@ Controladora do SEQUENCER;
 #X msg 67 51 \; pd-diretrizes_de_criação_do_sequencer vis 1;
 #X connect 0 0 1 0;
 #X restore 224 57 pd diretrizes;
-#N canvas 209 0 640 676 documentação_sequencer 0;
+#N canvas 209 22 640 676 documentação_sequencer 0;
 #X obj 59 82 else/pic 1 ./data/diagrama_sequencer.gif empty empty 0
 0;
 #X text 28 291 ENTRADAS:;
 #X text 48 320 mensagem de controle do sequencer -;
 #N canvas 408 135 450 513 Mensagens_de_controle_do_sequencer 0;
 #X restore 266 320 pd Mensagens_de_controle_do_sequencer;
-#N canvas 347 91 449 577 diretrizes_de_criação_do_sequencer 0;
+#N canvas 196 169 449 577 diretrizes_de_criação_do_sequencer 0;
 #X text 30 62 Comportamento:;
 #X text 57 88 Sobre reproduzir compassos ativados:;
 #X text 78 103 compassos são ativados quando em modo de tocar instrumento.
@@ -587,11 +655,27 @@ que utiliza 4 compassos \, o que vai acontecer?;
 Diretrizes de criação;
 #X text 67 224 -;
 #X text 78 224 cada pad tem no máximo 4 ciclos de 4 compassos;
-#X text 102 453 Vai ficar dando loop nos dois compassos. Se quiser
-mais dois compassos em branco \, será necessário esperar completar
-os compassos seguintes, f 53;
-#X text 102 495 Para gravar compassos em branco deverá ter sido gravado
+#N canvas 423 385 450 300 solução 0;
+#X text 46 27 Vai ficar dando loop nos dois compassos. Se quiser mais
+dois compassos em branco \, será necessário esperar completar os
+compassos seguintes, f 53;
+#X text 46 69 Para gravar compassos em branco deverá ter sido gravado
 algum evento ou antes ou depois dos compassos em branco, f 53;
+#X restore 94 455 pd solução;
+#X text 66 481 - Como vou manter a reprodução dos pads com índices
+independentes e ao mesmo tempo sincronizados? Isso pq gostaria de deixar
+os pads com reprodução inicial independente., f 59;
+#N canvas 694 77 450 300 solução 0;
+#X text 66 36 Através de acionamento quantizado em compassos;
+#X text 66 66 Essa implementação pode ser feita por uma classe que
+instaure um contador. Um objeto que alimente o objeto pad com os índices.
+O cálculo será feito através do dado de phase do abl_link~.;
+#X text 66 126 O comando pode consistir em uma mensagem de requisição
+no formato <tocar 1 2 > sendo o primeiro <float> compasso de início
+e segundo <float> o último compasso a ser tocado.;
+#X text 66 176 lembrar que o controle de acionamento é feito através
+do array pads_ativos;
+#X restore 161 520 pd solução;
 #X restore 58 61 pd diretrizes_de_criação_do_sequencer;
 #X obj 21 17 else/note 425 18 Menlo empty 0 0 0 0 0 255 255 255 0 0
 Documentação do SEQUENCER;
@@ -659,7 +743,7 @@ Moduladores -, f 64;
 #X coords 0 -1 1 1 109 22 2 10 10;
 #X restore 16 12 pd doc_E2;
 #X obj 318 16 declare -path ./abs/esa_sequencer_abs;
-#N canvas 71 86 1071 458 A2-Sequencer_registrador_de_eventos 0;
+#N canvas 39 174 1071 458 A2-Sequencer_registrador_de_eventos 1;
 #N canvas 562 393 450 300 Timestamp 0;
 #X obj 98 41 else/click 1;
 #X msg 98 62 \; pd-T2-Gerador_de_Timestamp vis 1;
@@ -740,7 +824,7 @@ SEQUENCER;
 #X obj 55 213 unpack;
 #X obj 163 196 pack f f f;
 #X msg 163 217 \$2 \$3 \$1;
-#N canvas 229 -430 450 300 debug_dsp_off 0;
+#N canvas 184 89 450 300 debug_dsp_off 0;
 #X obj 69 99 else/rescale 0 127 0 4;
 #X msg 69 150 fase \$1;
 #X obj 69 122 else/quantizer;
@@ -863,7 +947,7 @@ f 34;
 Gerenciador dos Processadores de Som;
 #X text 94 44 Mensagens são recebidas e modificadas caso necessário
 ;
-#N canvas 152 338 875 324 controles_looper 0;
+#N canvas 172 142 875 411 controles_looper 0;
 #N canvas 580 50 558 287 pads_hold_time 0;
 #X obj 232 232 array set \$0-pads_hold_time;
 #X obj 60 16 inlet;
@@ -890,14 +974,14 @@ loop, f 19;
 #X obj 488 137 t f b;
 #X msg 418 169 show;
 #X obj 773 110 r tgl_loop_snd;
-#X obj 670 279 s player~_entrada;
+#X obj 663 279 s player~_entrada;
 #X msg 793 140 loop \$1;
-#X obj 680 230 list prepend;
-#X obj 676 169 bng 15 250 50 0 empty empty empty 17 7 0 10 -262144
+#X obj 673 230 list prepend;
+#X obj 673 169 bng 15 250 50 0 empty empty empty 17 7 0 10 -262144
 -1 -1;
-#X obj 680 254 list trim;
+#X obj 673 254 list trim;
 #X obj 413 89 t f f;
-#X obj 677 144 t b f, f 9;
+#X obj 673 144 t b f, f 9;
 #N canvas 422 251 210 251 índice-estado 0;
 #X obj 25 19 inlet;
 #X obj 55 60 unpack f f f;
@@ -916,7 +1000,7 @@ loop, f 19;
 #X obj 383 27 r estado_gui_pad;
 #X obj 664 58 r pads_gui;
 #X obj 673 101 unpack;
-#X obj 680 195 message loop 0;
+#X obj 673 195 message loop 0;
 #X obj 43 28 r quantidade_de_pads;
 #X msg 58 53 resize \$1;
 #X obj 46 147 r E3-D1_controles_looper;
@@ -935,16 +1019,16 @@ loop, f 19;
 #X connect 2 0 3 1;
 #X connect 3 0 4 0;
 #X connect 4 0 5 0;
-#X restore 256 188 pd índice-estado;
-#X msg 256 209 \$2 \$1;
-#X obj 256 230 unpack;
-#X obj 134 277 array set pads_ativos;
+#X restore 225 203 pd índice-estado;
+#X msg 225 224 \$2 \$1;
+#X obj 225 295 unpack;
+#X obj 103 342 array set pads_ativos;
 #N canvas 0 22 450 300 retorna_estado_índice_pad 0;
 #X obj 37 37 inlet;
 #X obj 42 206 outlet;
 #X connect 0 0 1 0;
-#X restore 76 188 pd retorna_estado_índice_pad;
-#X obj 76 209 unpack;
+#X restore 45 253 pd retorna_estado_índice_pad;
+#X obj 45 274 unpack;
 #X text 184 44 vetor com os estados de acionamento dos pads, f 24
 ;
 #X text 28 128 Configuração dinâmica do estado dos pads do looper
@@ -952,6 +1036,30 @@ loop, f 19;
 #X obj 58 71 array define -yrange 0 1 pads_ativos 16;
 #X msg 206 13 arrayviewlistnew;
 #X obj 46 166 route show;
+#X obj 277 234 r pads_teste;
+#N canvas 573 201 450 300 pad_n 0;
+#X obj 106 30 inlet;
+#X obj 136 260 v pad_n;
+#X obj 136 81 unpack, f 8;
+#X obj 136 137 f;
+#X obj 136 176 spigot 0;
+#X obj 136 102 t b f f;
+#X obj 204 176 sel 0;
+#X msg 204 197 -1;
+#X text 238 111 se o pad for ativado \, seu índice vai para pad_n
+\, se algum pad for desativado \, pad_n = 0, f 23;
+#X connect 0 0 2 0;
+#X connect 2 0 5 0;
+#X connect 2 1 3 1;
+#X connect 3 0 4 0;
+#X connect 4 0 1 0;
+#X connect 5 0 3 0;
+#X connect 5 1 4 1;
+#X connect 5 2 6 0;
+#X connect 6 0 7 0;
+#X connect 7 0 1 0;
+#X restore 314 319 pd pad_n;
+#X obj 314 289 t a;
 #X connect 2 0 16 0;
 #X connect 2 1 3 0;
 #X connect 3 0 4 0;
@@ -981,14 +1089,19 @@ loop, f 19;
 #X connect 26 0 27 0;
 #X connect 27 0 28 0;
 #X connect 28 0 29 0;
+#X connect 28 0 40 0;
 #X connect 29 0 30 0;
 #X connect 29 1 30 1;
 #X connect 31 0 32 0;
+#X connect 31 0 40 0;
 #X connect 32 0 30 0;
 #X connect 32 1 30 1;
 #X connect 36 0 35 0;
 #X connect 37 0 36 0;
 #X connect 37 1 31 0;
+#X connect 38 0 29 0;
+#X connect 38 0 40 0;
+#X connect 40 0 39 0;
 #X restore 204 235 pd controles_looper;
 #X connect 1 0 0 0;
 #X connect 2 0 3 0;
@@ -1171,7 +1284,7 @@ Efeitos de Masterização;
 #X coords 0 -1 1 1 109 22 2 10 10;
 #X restore 19 13 pd doc_E4;
 #X restore 12 74 pd E4-Processamento_de_Áudio_Mixagem;
-#N canvas 216 -1015 616 336 gui 0;
+#N canvas 226 112 616 336 gui 0;
 #N canvas 191 187 346 132 pd 0;
 #X obj 20 40 cnv 10 60 28 empty empty empty 9 15 0 18 -66577 -228856
 0;
@@ -1233,7 +1346,7 @@ empty 17 7 0 10 -228856 -66577 -1 1 1;
 #X restore 253 273 pd índice-estado;
 #X obj 112 367 s player~_entrada;
 #X obj 253 367 s recorder~_entrada;
-#N canvas 616 417 361 281 controla_player 0;
+#N canvas 647 393 389 281 controla_player 0;
 #X obj 30 15 inlet;
 #X obj 38 244 outlet;
 #X obj 60 76 unpack, f 11;
@@ -2008,5 +2121,5 @@ Chegada de mensagens;
 #X obj 313 223 else/openfile https://github.com/emviveros/ESA -h;
 #N canvas 764 43 450 300 init 0;
 #X obj 26 33 else/initmess \; quantidade_de_pads 16 \; seq_resolution
-123, f 34;
+128, f 23;
 #X restore 379 119 pd init;

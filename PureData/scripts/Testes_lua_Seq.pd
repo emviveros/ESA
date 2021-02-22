@@ -1,0 +1,25 @@
+#N canvas 429 -1040 892 411 10;
+#X msg 198 141 read -c teste_classe_pad.lua;
+#X msg 159 96 read -c pad_class.lua;
+#X obj 129 171 ofelia d classePad;
+#X msg 533 124 read -c pad_class_debug.lua;
+#X obj 499 172 ofelia d pad_class_debug;
+#X obj 361 30 bng 15 250 50 0 empty empty empty 17 7 0 10 -262144 -1
+-1;
+#X obj 346 253 bng 15 250 50 0 empty empty empty 17 7 0 10 -262144
+-1 -1;
+#X obj 719 246 v padSeq_dim;
+#X obj 717 193 loadbang;
+#X msg 717 214 128;
+#X obj 361 50 t b b;
+#X obj 342 290 ofelia f \; local pad = require("classePad") \; local
+pad_0 = pad.novo(0) \; pad_0.inicializar() \;;
+#X connect 0 0 2 0;
+#X connect 1 0 2 0;
+#X connect 3 0 4 0;
+#X connect 5 0 10 0;
+#X connect 6 0 11 0;
+#X connect 8 0 9 0;
+#X connect 9 0 7 0;
+#X connect 10 0 1 0;
+#X connect 10 1 3 0;

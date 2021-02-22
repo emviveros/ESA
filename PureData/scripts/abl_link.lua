@@ -1,8 +1,8 @@
 --[[---------------------------------------------------------------------------
     Lua script com código para acesso a inlets e outlets do objeto [abl_link~]
 
-                                                    Esteban Viveros 2021
-                                        https://github.com/emviveros/ESA
+                                                        Esteban Viveros 2021
+                                            https://github.com/emviveros/ESA
 
 -------------------------------------------------------------------------------]]
 
@@ -32,7 +32,7 @@ function M.connect(a)
         a = 1
         M.abl_link_connected = a
     end
-    out:outletList(1, ofTable('connect', a) )
+    out:outletList(1, {'connect', a} )
 end
 
 function M.play(a);
@@ -44,7 +44,7 @@ function M.play(a);
         a = 1
         M.is_playing_value = a
     end
-    out:outletList(1, ofTable('play', a) )
+    out:outletList(1, {'play', a} )
 end
 
 function M.beat(a)
@@ -53,7 +53,7 @@ function M.beat(a)
     else
         a = math.abs(a)
         M.beat_de_reinicio = a
-        out:outletList(1, ofTable('reset', M.beat_de_reinicio, M.quantum_da_secao) )
+        out:outletList(1, {'reset', M.beat_de_reinicio, M.quantum_da_secao} )
     end
 end
 
@@ -63,7 +63,7 @@ function M.quantum(a)
     else
         a = math.abs(a)
         M.quantum_da_secao = a
-        out:outletList(1, ofTable('reset', M.beat_de_reinicio, M.quantum_da_secao) )
+        out:outletList(1, {'reset', M.beat_de_reinicio, M.quantum_da_secao} )
     end
 end
 
@@ -73,7 +73,7 @@ function M.reset(fv)
     else
         M.beat_de_reinicio = fv[1]
         M.quantum_da_secao = fv[2]
-        out:outletList(1, ofTable('reset', M.beat_de_reinicio, M.quantum_da_secao) )
+        out:outletList(1, {'reset', M.beat_de_reinicio, M.quantum_da_secao} )
     end
 end
 
@@ -82,7 +82,7 @@ function M.resolution(a)
         return M.resolution_value
     else
         M.resolution_value = a
-        out:outletList(1, ofTable('resolution', a) )
+        out:outletList(1, {'resolution', a} )
     end
 end
 
@@ -91,7 +91,7 @@ function M.tempo(a)
         print("of_abl_link_metro: argumento inválido para mensagem tempo")
     else
         M.time_value = a
-        out:outletList(1, ofTable('tempo', a) )
+        out:outletList(1, {'tempo', a} )
     end
 end
 
@@ -100,7 +100,7 @@ function M.offset(a)
         print("of_abl_link_metro: argumento inválido para mensagem offset")
     else
         M.offset_value = a
-        out:outletList(1, ofTable('offset', a) )
+        out:outletList(1, {'offset', a} )
     end
 end
 
